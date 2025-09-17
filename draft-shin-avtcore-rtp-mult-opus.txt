@@ -1,0 +1,133 @@
+
+
+
+
+Independent Submission                                           S. Shin
+Internet-Draft                                                    NVIDIA
+Intended status: Informational                         17 September 2025
+Expires: 21 March 2026
+
+
+                      RTP/SDP for Opus Multistream
+                raft-shin-avtcore-rtp-multi-opus-latest
+
+Abstract
+
+   This document specifies RTP/SDP signaling for Opus multistream
+   (multi-channel) operation, enabling negotiation of layouts such as
+   5.1 and 7.1 in real-time communications.  It defines an SDP encoding
+   name and format parameters to describe multistream configurations,
+   and specifies Offer/Answer procedures for interoperable negotiation.
+   This document extends the Opus RTP payload format defined in RFC 7587
+   and reuses the channel-mapping concepts defined for the Ogg container
+   in RFC 7845.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 21 March 2026.
+
+Copyright Notice
+
+   Copyright (c) 2025 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Relationship to Existing RFCs
+   3.  Relationship of RFCs and This Draft:
+   4.  Summary of RFCs and This Draft:
+   5.  Overview and Rationale
+   Contributors
+   Author's Address
+
+1.  Introduction
+
+   Opus (RFC 6716) supports up to 255 channels via multistream with
+   explicit channel mapping.  The RTP payload format for Opus (RFC
+   7587), however, standardizes only mono/stereo signaling for RTP/SDP
+   and leaves multistream out of scope.  RFC 7845 defines
+   channel-mapping families for Opus carried in the Ogg container, but
+   it does not define RTP/SDP signaling or Offer/Answer behavior.  This
+   document fills that gap by specifying interoperable SDP signaling and
+   Offer/Answer procedures for multistream Opus in RTP sessions, while
+   aligning channel-mapping semantics with RFC 7845.
+
+2.  Relationship to Existing RFCs
+
+   This section summarizes the scope and relationship between RFC 6716
+   (Opus codec), RFC 7587 (Opus over RTP), RFC 7845 (Ogg encapsulation
+   of Opus), and this draft.  While RFC 7845 defines channel mapping
+   families for multistream Opus in the Ogg container, it does not
+   define SDP signaling or RTP usage.  RFC 7587 defines the RTP payload
+   format for Opus but only covers mono/stereo signaling.  This draft
+   extends RFC 7587 to define SDP signaling for multistream Opus in RTP
+   sessions and reuses the mapping semantics from RFC 7845.
+
+3.  Relationship of RFCs and This Draft:
+
+     +----------------+     +-------------------+     +----------------+
+     |   RFC 6716     |     |     RFC 7845      |     |   RFC 7587     |
+     |  Opus Codec    |     | Ogg Encapsulation |     | Opus over RTP  |
+     +----------------+     +-------------------+     +----------------+
+              |                       |                        |
+              |                       |                        |
+              +-----------------------+------------------------+
+                                      |
+                                      v
+                      +------------------------------+
+                      |  This Draft (Multi-Opus RTP) |
+                      |  SDP Signaling + O/A Rules   |
+                      +------------------------------+
+
+4.  Summary of RFCs and This Draft:
+
+   +------------+----------------------+----------------------+---------
+   -------------+ | RFC/Draft | Scope | Defines Channel Map? | Defines
+   SDP Signaling| +------------+----------------------+-----------------
+   -----+----------------------+ | RFC 6716 | Opus codec | Yes (API
+   level) | No | | RFC 7845 | Ogg encapsulation | Yes (families) |
+   No | | RFC 7587 | RTP payload format | No (mono/stereo only)| Yes
+   (mono/stereo) | | This Draft | RTP multistream SDP | Reuses RFC
+   7845 | Yes (multi-channel) | +------------+----------------------+---
+   -------------------+----------------------+
+
+5.  Overview and Rationale
+
+   Deployed systems (e.g., libwebrtc-based) interoperate using a
+   non-standard SDP encoding name “multiopus” with fmtp parameters such
+   as num_streams, coupled_streams, and channel_mapping.  Standardizing
+   these semantics improves interoperability and removes the need for
+   application-level SDP text modifications.
+
+Contributors
+
+   *  Sun Shin
+
+Author's Address
+
+   Sun Shin
+   NVIDIA
+   Email: sushin@nvidia.com
