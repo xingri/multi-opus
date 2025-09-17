@@ -13,7 +13,7 @@
       RTP/SDP Signaling for Opus Multistream (multi‑Opus)
     </title>
 
-    <seriesInfo name="Internet-Draft" value="draft-shin-avtcore-rtp-multiopus-00"/>
+    <seriesInfo name="Internet-Draft" value="draft-shin-avtcore-rtp-multiopus-latest"/>
     <author fullname="Sun Shin" initials="S." surname="Shin">
       <organization>NVIDIA</organization>
       <address>
