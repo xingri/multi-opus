@@ -1224,14 +1224,14 @@ and reuses the mapping semantics from RFC 7845.<a href="#section-2-1" class="pil
       </h2>
 <div class="alignLeft art-text artwork" id="section-4-1">
 <pre>
- +----------+-------------+-----------------------+------------------+
- | RFC      | Scope       | Defines Channel Map   | SDP Signaling    |
- +----------+-------------+-----------------------+------------------+
- | RFC 6716 | Opus codec  | Yes (API level)       | No               |
- | RFC 7845 | Ogg encaps  | Yes (families)        | No               |
- | RFC 7587 | RTP payload | No (mono/stereo only) | Yes(mono/stereo) |
- | Current. | MultiCh SDP | Reuses RFC 7845       | Yes (multi-ch)   |
- +----------+-------------+-----------------------+------------------+
+ +------------+----------------------+-----------------------+-----------------------+
+ | RFC/Draft  | Scope                | Defines Channel Map?  | Defines SDP Signaling |
+ +------------+----------------------+-----------------------+-----------------------+
+ | RFC 6716   | Opus codec           | Yes (API level)       | No                    |
+ | RFC 7845   | Ogg encapsulation    | Yes (families)        | No                    |
+ | RFC 7587   | RTP payload format   | No (mono/stereo only) | Yes (mono/stereo)     |
+ | This Draft | RTP multistream SDP  | Reuses RFC 7845       | Yes (multi-channel)   |
+ +------------+----------------------+-----------------------+-----------------------+
 </pre><a href="#section-4-1" class="pilcrow">¶</a>
 </div>
 </section>
