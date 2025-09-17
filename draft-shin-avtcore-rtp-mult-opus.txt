@@ -109,7 +109,7 @@ Table of Contents
    ------------+-----------------------+------------------+ | RFC 6716 |
    Opus codec | Yes (API level) | No | | RFC 7845 | Ogg encaps | Yes
    (families) | No | | RFC 7587 | RTP payload | No (mono/stereo only) |
-   Yes(mono/stereo) | | Current | MultiCh SDP | Reuses RFC 7845 | Yes
+   Yes(mono/stereo) | | Current. | MultiCh SDP | Reuses RFC 7845 | Yes
    (multi-ch) |
    +----------+-------------+-----------------------+------------------+
 
