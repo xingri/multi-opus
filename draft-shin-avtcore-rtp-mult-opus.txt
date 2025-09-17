@@ -104,14 +104,14 @@ Table of Contents
 
 4.  Summary of RFCs and This Draft:
 
-   +----------+-------------+-----------------------+-------------------
-   ----+ | RFC | Scope | Defines Channel Map?  | Defines SDP Signaling |
-   +----------+-------------+-----------------------+-------------------
-   ----+ | RFC 6716 | Opus codec | Yes (API level) | No | | RFC 7845 |
-   Ogg encaps | Yes (families) | No | | RFC 7587 | RTP payload | No
-   (mono/stereo only) | Yes(mono/stereo) | | Current | MultiCH SDP |
-   Reuses RFC 7845 | Yes (multi-channel) | +----------+-------------+---
-   --------------------+-----------------------+
+   +----------+-------------+-----------------------+------------------
+   + | RFC | Scope | Defines Channel Map | SDP Signaling | +----------+-
+   ------------+-----------------------+------------------+ | RFC 6716 |
+   Opus codec | Yes (API level) | No | | RFC 7845 | Ogg encaps | Yes
+   (families) | No | | RFC 7587 | RTP payload | No (mono/stereo only) |
+   Yes(mono/stereo) | | Current | MultiCh SDP | Reuses RFC 7845 | Yes
+   (multi-ch) |
+   +----------+-------------+-----------------------+------------------+
 
 5.  Overview and Rationale
 
