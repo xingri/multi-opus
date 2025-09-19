@@ -4,8 +4,8 @@
 
 Independent Submission                                           S. Shin
 Internet-Draft                                                    NVIDIA
-Intended status: Informational                         17 September 2025
-Expires: 21 March 2026
+Intended status: Informational                         19 September 2025
+Expires: 23 March 2026
 
 
                       RTP/SDP for Opus Multistream
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 March 2026.
+   This Internet-Draft will expire on 23 March 2026.
 
 Copyright Notice
 
@@ -60,6 +60,14 @@ Table of Contents
    3.  Relationship of RFCs and This Draft:
    4.  Summary of RFCs and This Draft:
    5.  Overview and Rationale
+   6.  SDP Signaling for Opus Multistream
+     6.1.  Encoding Name and RTPMAP
+     6.2.  Format Parameters (FMTP)
+       6.2.1.  The following fmtp parameters are defined:
+   7.  Offer/Answer Procedures
+     7.1.  Examples
+       7.1.1.  Offer: 5.1 (6 channels)
+       7.1.2.  Answer: accept 5.1
    Contributors
    Author's Address
 
@@ -120,6 +128,59 @@ Table of Contents
    as num_streams, coupled_streams, and channel_mapping.  Standardizing
    these semantics improves interoperability and removes the need for
    application-level SDP text modifications.
+
+6.  SDP Signaling for Opus Multistream
+
+6.1.  Encoding Name and RTPMAP
+
+   The SDP rtpmap attribute for Opus multistream uses the encoding name
+   multiopus: a=rtpmap: multiopus/48000/[channels] [channels]: the total
+   number of output channels (e.g., 6 for 5.1, 8 for 7.1).
+
+6.2.  Format Parameters (FMTP)
+
+6.2.1.  The following fmtp parameters are defined:
+
+   num_streams (integer): number of Opus elementary streams.
+   coupled_streams (integer): number of coupled (stereo) streams.
+   channel_mapping (comma-separated integers): per-channel mapping from
+   decoded streams to output channels, ordered consistently with Opus
+   multistream semantics. mapping_family (integer, OPTIONAL): identifies
+   a well-known mapping family for common layouts as defined by RFC
+   7845; if present, it qualifies the interpretation of channel_mapping.
+   When omitted, channel_mapping is authoritative.  Other Opus
+   parameters from RFC 7587 (e.g., maxaveragebitrate, minptime,
+   useinbandfec) remain applicable.
+
+7.  Offer/Answer Procedures
+
+   An offerer willing to negotiate multichannel Opus MAY include one or
+   more payload types using multiopus with appropriate fmtp, and SHOULD
+   include a stereo alternative using opus/48000/2 (RFC 7587) for
+   backward compatibility.
+
+   An answerer that supports the offered multiopus configuration MUST
+   select the corresponding payload type and include the selected
+   multistream parameters in the answer.  If unsupported, the answerer
+   MAY select a stereo opus payload or reject the m-section per RFC
+   3264.  Down-conversion to stereo SHOULD NOT occur silently when the
+   answerer supports the offered configuration.
+
+7.1.  Examples
+
+7.1.1.  Offer: 5.1 (6 channels)
+
+   m=audio 9 UDP/TLS/RTP/SAVPF 111 112 a=mid:audio a=rtpmap:111
+   multiopus/48000/6 a=fmtp:111
+   num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+   a=rtpmap:112 opus/48000/2 a=sendrecv
+
+7.1.2.  Answer: accept 5.1
+
+   m=audio 9 UDP/TLS/RTP/SAVPF 111 a=mid:audio a=rtpmap:111
+   multiopus/48000/6 a=fmtp:111
+   num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+   a=sendrecv
 
 Contributors
 
