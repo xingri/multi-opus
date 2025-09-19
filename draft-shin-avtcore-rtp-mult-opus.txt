@@ -134,8 +134,8 @@ Table of Contents
 6.1.  Encoding Name and RTPMAP
 
    The SDP rtpmap attribute for Opus multistream uses the encoding name
-   multiopus: a=rtpmap: multiopus/48000/[channels] [channels]: the total
-   number of output channels (e.g., 6 for 5.1, 8 for 7.1).
+   multiopus: a=rtpmap: multiopus/48000/channels (the total number of
+   output channels (e.g., 6 for 5.1, 8 for 7.1).)
 
 6.2.  Format Parameters (FMTP)
 
