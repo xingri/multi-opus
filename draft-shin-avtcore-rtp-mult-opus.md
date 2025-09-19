@@ -6,9 +6,9 @@ date: {DATE}
 category: info
 
 ipr: trust200902
-area: General
+area: "Web and Internet Transport"
 submissionType: IETF
-workgroup: Independent Submission
+workgroup: "Audio/Video Transport Core Maintenance"
 keyword: Internet-Draft
 
 stand_alone: yes
@@ -72,8 +72,8 @@ and reuses the mapping semantics from RFC 7845.
                        +------------------------------+
 
 # Summary of RFCs and This Draft:
-        
-     +------------+----------------------+-----------------------+-----------------------+ 
+
+     +------------+----------------------+-----------------------+-----------------------+
      | RFC/Draft  | Scope                | Defines Channel Map?  | Defines SDP Signaling |
      +------------+----------------------+-----------------------+-----------------------+
      | RFC 6716   | Opus codec           | Yes (API level)       | No                    |
@@ -107,7 +107,7 @@ a=rtpmap: multiopus/48000/[channels]
 num_streams (integer): number of Opus elementary streams.
 coupled_streams (integer): number of coupled (stereo) streams.
 channel_mapping (comma‑separated integers): per‑channel mapping from decoded streams to output channels, ordered consistently with Opus multistream semantics.
-mapping_family (integer, OPTIONAL): identifies a well‑known mapping family for common layouts as defined by RFC 7845; if present, it qualifies the interpretation of channel_mapping. 
+mapping_family (integer, OPTIONAL): identifies a well‑known mapping family for common layouts as defined by RFC 7845; if present, it qualifies the interpretation of channel_mapping.
 When omitted, channel_mapping is authoritative.
 Other Opus parameters from RFC 7587 (e.g., maxaveragebitrate, minptime, useinbandfec) remain applicable.
 
