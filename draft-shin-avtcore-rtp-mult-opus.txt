@@ -68,7 +68,6 @@ Table of Contents
      7.1.  Examples
        7.1.1.  Offer: 5.1 (6 channels)
        7.1.2.  Answer: accept 5.1
-   Contributors
    Author's Address
 
 1.  Introduction
@@ -181,10 +180,6 @@ Table of Contents
    multiopus/48000/6 a=fmtp:111
    num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
    a=sendrecv
-
-Contributors
-
-   *  Sun Shin
 
 Author's Address
 
