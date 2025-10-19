@@ -4,12 +4,12 @@
 
 Independent Submission                                           S. Shin
 Internet-Draft                                                    NVIDIA
-Intended status: Informational                         19 September 2025
-Expires: 23 March 2026
+Intended status: Informational                           19 October 2025
+Expires: 22 April 2026
 
 
                       RTP/SDP for Opus Multistream
-                raft-shin-avtcore-rtp-multi-opus-latest
+                draft-shin-avtcore-rtp-multi-opus-latest
 
 Abstract
 
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 March 2026.
+   This Internet-Draft will expire on 22 April 2026.
 
 Copyright Notice
 
