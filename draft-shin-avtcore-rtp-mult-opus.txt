@@ -61,9 +61,9 @@ Table of Contents
    4.  Summary of RFCs and This Draft:
    5.  Overview and Rationale
    6.  SDP Signaling for Opus Multistream
-     6.1.  Encoding Name and RTPMAP
-     6.2.  Format Parameters (FMTP)
-       6.2.1.  The following fmtp parameters are defined:
+     6.1.  SDP Syntax for Multichannel Opus
+       6.1.1.  SDP Example for 5.1 Audio
+       6.1.2.  Field Descriptions
    7.  Offer/Answer Procedures
      7.1.  Examples
        7.1.1.  Offer: 5.1 (6 channels)
@@ -130,28 +130,37 @@ Table of Contents
 
 6.  SDP Signaling for Opus Multistream
 
-6.1.  Encoding Name and RTPMAP
+6.1.  SDP Syntax for Multichannel Opus
 
-   The SDP rtpmap attribute for Opus multistream uses the encoding name
-   multiopus: a=rtpmap: multiopus/48000/<channel count>
+6.1.1.  SDP Example for 5.1 Audio
 
-   <channel-count> is the total number of output channels (e.g., 6 for
-   5.1, 8 for 7.1).
+   sdp a=rtpmap:96 multiopus/48000/6 a=fmtp:96
+   num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
 
-6.2.  Format Parameters (FMTP)
+6.1.2.  Field Descriptions
 
-6.2.1.  The following fmtp parameters are defined:
+   *  a=rtpmap:<pt> multiopus/48000/<channel-count>
 
-   num_streams (integer): number of Opus elementary streams.
-   coupled_streams (integer): number of coupled (stereo) streams.
-   channel_mapping (comma-separated integers): per-channel mapping from
-   decoded streams to output channels, ordered consistently with Opus
-   multistream semantics. mapping_family (integer, OPTIONAL): identifies
-   a well-known mapping family for common layouts as defined by RFC
-   7845; if present, it qualifies the interpretation of channel_mapping.
-   When omitted, channel_mapping is authoritative.  Other Opus
-   parameters from RFC 7587 (e.g., maxaveragebitrate, minptime,
-   useinbandfec) remain applicable.
+      -  <pt>: Dynamic payload type (e.g., 96).
+
+      -  48000: Fixed clock rate for Opus.
+
+      -  <channel-count>: Total number of output channels (e.g., 6 for
+         5.1, 8 for 7.1).
+
+   *  a=fmtp:<pt>
+      num_streams=<N>;coupled_streams=<M>;channel_mapping=<C>
+
+      -  num_streams: Total number of Opus streams.
+
+      -  coupled_streams: Number of stereo (coupled) streams.
+
+      -  channel_mapping: Comma-separated list mapping RTP channels to
+         speaker positions.
+
+   *  The channel_mapping values follow the Opus multistream mapping
+      (https://webrtc-review.googlesource.com/c/src/+/129768) used by
+      libwebrtc.
 
 7.  Offer/Answer Procedures
 

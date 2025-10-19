@@ -1157,13 +1157,13 @@ concepts defined for the Ogg container in RFC 7845.<a href="#section-abstract-1"
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-sdp-signaling-for-opus-mult" class="internal xref">SDP Signaling for Opus Multistream</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-encoding-name-and-rtpmap" class="internal xref">Encoding Name and RTPMAP</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
-                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-format-parameters-fmtp" class="internal xref">Format Parameters (FMTP)</a></p>
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-sdp-syntax-for-multichannel" class="internal xref">SDP Syntax for Multichannel Opus</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.1">
-                    <p id="section-toc.1-1.6.2.2.2.1.1"><a href="#section-6.2.1" class="auto internal xref">6.2.1</a>.  <a href="#name-the-following-fmtp-paramete" class="internal xref">The following fmtp parameters are defined:</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
+                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-sdp-example-for-51-audio" class="internal xref">SDP Example for 5.1 Audio</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.2">
+                    <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="auto internal xref">6.1.2</a>.  <a href="#name-field-descriptions" class="internal xref">Field Descriptions</a></p>
 </li>
                 </ul>
 </li>
@@ -1281,32 +1281,60 @@ for application‑level SDP text modifications.<a href="#section-5-1" class="pil
       <h2 id="name-sdp-signaling-for-opus-mult">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-sdp-signaling-for-opus-mult" class="section-name selfRef">SDP Signaling for Opus Multistream</a>
       </h2>
-<div id="encoding-name-and-rtpmap">
+<div id="sdp-syntax-for-multichannel-opus">
 <section id="section-6.1">
-        <h3 id="name-encoding-name-and-rtpmap">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-encoding-name-and-rtpmap" class="section-name selfRef">Encoding Name and RTPMAP</a>
+        <h3 id="name-sdp-syntax-for-multichannel">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-sdp-syntax-for-multichannel" class="section-name selfRef">SDP Syntax for Multichannel Opus</a>
         </h3>
-<p id="section-6.1-1">The SDP rtpmap attribute for Opus multistream uses the encoding name multiopus:
-a=rtpmap: multiopus/48000/&lt;channel count&gt;<a href="#section-6.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.1-2"><code>&lt;channel-count&gt;</code> is the total number of output channels (e.g., 6 for 5.1, 8 for 7.1).<a href="#section-6.1-2" class="pilcrow">¶</a></p>
+<div id="sdp-example-for-51-audio">
+<section id="section-6.1.1">
+          <h4 id="name-sdp-example-for-51-audio">
+<a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-sdp-example-for-51-audio" class="section-name selfRef">SDP Example for 5.1 Audio</a>
+          </h4>
+<p id="section-6.1.1-1"><code>sdp
+a=rtpmap:96 multiopus/48000/6
+a=fmtp:96 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+</code><a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="format-parameters-fmtp">
-<section id="section-6.2">
-        <h3 id="name-format-parameters-fmtp">
-<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-format-parameters-fmtp" class="section-name selfRef">Format Parameters (FMTP)</a>
-        </h3>
-<div id="the-following-fmtp-parameters-are-defined">
-<section id="section-6.2.1">
-          <h4 id="name-the-following-fmtp-paramete">
-<a href="#section-6.2.1" class="section-number selfRef">6.2.1. </a><a href="#name-the-following-fmtp-paramete" class="section-name selfRef">The following fmtp parameters are defined:</a>
+<div id="field-descriptions">
+<section id="section-6.1.2">
+          <h4 id="name-field-descriptions">
+<a href="#section-6.1.2" class="section-number selfRef">6.1.2. </a><a href="#name-field-descriptions" class="section-name selfRef">Field Descriptions</a>
           </h4>
-<p id="section-6.2.1-1">num_streams (integer): number of Opus elementary streams.
-coupled_streams (integer): number of coupled (stereo) streams.
-channel_mapping (comma‑separated integers): per‑channel mapping from decoded streams to output channels, ordered consistently with Opus multistream semantics.
-mapping_family (integer, OPTIONAL): identifies a well‑known mapping family for common layouts as defined by RFC 7845; if present, it qualifies the interpretation of channel_mapping. 
-When omitted, channel_mapping is authoritative.
-Other Opus parameters from RFC 7587 (e.g., maxaveragebitrate, minptime, useinbandfec) remain applicable.<a href="#section-6.2.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.1.2-1.1">
+              <p id="section-6.1.2-1.1.1"><code>a=rtpmap:&lt;pt&gt; multiopus/48000/&lt;channel-count&gt;</code><a href="#section-6.1.2-1.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.1.2-1.1.2.1">
+                  <p id="section-6.1.2-1.1.2.1.1"><code>&lt;pt&gt;</code>: Dynamic payload type (e.g., 96).<a href="#section-6.1.2-1.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                <li class="normal" id="section-6.1.2-1.1.2.2">
+                  <p id="section-6.1.2-1.1.2.2.1"><code>48000</code>: Fixed clock rate for Opus.<a href="#section-6.1.2-1.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                <li class="normal" id="section-6.1.2-1.1.2.3">
+                  <p id="section-6.1.2-1.1.2.3.1"><code>&lt;channel-count&gt;</code>: Total number of output channels (e.g., 6 for 5.1, 8 for 7.1).<a href="#section-6.1.2-1.1.2.3.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
+</li>
+            <li class="normal" id="section-6.1.2-1.2">
+              <p id="section-6.1.2-1.2.1"><code>a=fmtp:&lt;pt&gt; num_streams=&lt;N&gt;;coupled_streams=&lt;M&gt;;channel_mapping=&lt;C&gt;</code><a href="#section-6.1.2-1.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.1.2-1.2.2.1">
+                  <p id="section-6.1.2-1.2.2.1.1"><code>num_streams</code>: Total number of Opus streams.<a href="#section-6.1.2-1.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                <li class="normal" id="section-6.1.2-1.2.2.2">
+                  <p id="section-6.1.2-1.2.2.2.1"><code>coupled_streams</code>: Number of stereo (coupled) streams.<a href="#section-6.1.2-1.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                <li class="normal" id="section-6.1.2-1.2.2.3">
+                  <p id="section-6.1.2-1.2.2.3.1"><code>channel_mapping</code>: Comma-separated list mapping RTP channels to speaker positions.<a href="#section-6.1.2-1.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
+</li>
+            <li class="normal" id="section-6.1.2-1.3">
+              <p id="section-6.1.2-1.3.1">The <code>channel_mapping</code> values follow the <a href="https://webrtc-review.googlesource.com/c/src/+/129768">Opus multistream mapping</a> used by libwebrtc.<a href="#section-6.1.2-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
 </section>
 </div>
 </section>
