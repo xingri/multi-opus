@@ -18,9 +18,9 @@ Abstract
    5.1 and 7.1 in real-time communications.  It defines an SDP encoding
    name and format parameters to describe multistream configurations,
    and specifies Offer/Answer procedures for interoperable negotiation.
-   This document extends the Opus RTP payload format defined in RFC 7587
-   and reuses the channel-mapping concepts defined for the Ogg container
-   in RFC 7845.
+   This document extends the Opus RTP payload format defined in
+   [RFC7587] and reuses the channel-mapping concepts defined for the Ogg
+   container in [RFC7845].
 
 Status of This Memo
 
@@ -67,19 +67,22 @@ Table of Contents
      7.1.  Examples
        7.1.1.  Offer: 5.1 (6 channels)
        7.1.2.  Answer: accept 5.1
+     7.2.  Security Considerations
+     7.3.  IANA Considerations
+   8.  Informative References
    Author's Address
 
 1.  Introduction
 
-   Opus (RFC 6716) supports up to 255 channels via multistream with
-   explicit channel mapping.  The RTP payload format for Opus (RFC
-   7587), however, standardizes only mono/stereo signaling for RTP/SDP
-   and leaves multistream out of scope.  RFC 7845 defines
+   Opus ([RFC6716]) supports up to 255 channels via multistream with
+   explicit channel mapping.  The RTP payload format for Opus
+   ([RFC7587]), however, standardizes only mono/stereo signaling for
+   RTP/SDP and leaves multistream out of scope.  [RFC7845] defines
    channel-mapping families for Opus carried in the Ogg container, but
    it does not define RTP/SDP signaling or Offer/Answer behavior.  This
    document fills that gap by specifying interoperable SDP signaling and
    Offer/Answer procedures for multistream Opus in RTP sessions, while
-   aligning channel-mapping semantics with RFC 7845.
+   aligning channel-mapping semantics with [RFC7845].
 
 2.  Relationship to Existing RFCs
 
@@ -193,6 +196,41 @@ Table of Contents
    multiopus/48000/6 a=fmtp:111
    num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
    a=sendrecv
+
+7.2.  Security Considerations
+
+   The use of the multiopus encoding in SDP does not introduce new
+   security concerns beyond those already described in [RFC 7587].
+   Implementers should ensure that SDP parsing and RTP payload handling
+   are robust against malformed or malicious input.  Applications using
+   multichannel Opus streams must also consider the privacy implications
+   of transmitting spatial audio data, which may reveal environmental
+   context.
+
+   Transport-level security mechanisms such as DTLS-SRTP are recommended
+   to protect RTP streams.
+
+7.3.  IANA Considerations
+
+   This document does not require any new IANA registrations.  The
+   multiopus encoding name and associated SDP attributes are used in
+   accordance with existing conventions and do not introduce new
+   protocol elements.
+
+8.  Informative References
+
+   [RFC6716]  Valin, JM., Vos, K., and T. Terriberry, "Definition of the
+              Opus Audio Codec", RFC 6716, DOI 10.17487/RFC6716,
+              September 2012, <https://www.rfc-editor.org/rfc/rfc6716>.
+
+   [RFC7587]  Spittka, J., Vos, K., and JM. Valin, "RTP Payload Format
+              for the Opus Speech and Audio Codec", RFC 7587,
+              DOI 10.17487/RFC7587, June 2015,
+              <https://www.rfc-editor.org/rfc/rfc7587>.
+
+   [RFC7845]  Terriberry, T., Lee, R., and R. Giles, "Ogg Encapsulation
+              for the Opus Audio Codec", RFC 7845, DOI 10.17487/RFC7845,
+              April 2016, <https://www.rfc-editor.org/rfc/rfc7845>.
 
 Author's Address
 
