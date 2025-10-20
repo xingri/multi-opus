@@ -4,12 +4,12 @@
 
 avtcore WG                                                       S. Shin
 Internet-Draft                                                    NVIDIA
-Intended status: Informational                           20 October 2025
-Expires: 23 April 2026
+Intended status: Informational                           19 October 2025
+Expires: 22 April 2026
 
 
                       RTP/SDP for Opus Multistream
-                draft-shin-avtcore-rtp-multi-opus-latest
+                  draft-shin-avtcore-rtp-multi-opus-00
 
 Abstract
 
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 April 2026.
+   This Internet-Draft will expire on 22 April 2026.
 
 Copyright Notice
 
@@ -175,10 +175,12 @@ Table of Contents
 
    An answerer that supports the offered multiopus configuration MUST
    select the corresponding payload type and include the selected
-   multistream parameters in the answer.  If unsupported, the answerer
-   MAY select a stereo opus payload or reject the m-section per
-   [RFC3264].  Down-conversion to stereo SHOULD NOT occur silently when
-   the answerer supports the offered configuration.
+   multistream parameters in the answer.
+
+   If unsupported, the answerer MAY select a stereo opus payload or
+   reject the m-section per [RFC3264].  Down-conversion to stereo SHOULD
+   NOT occur silently when the answerer supports the offered
+   configuration.
 
 7.1.  Examples
 
