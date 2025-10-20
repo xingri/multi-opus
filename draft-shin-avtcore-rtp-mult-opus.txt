@@ -124,7 +124,7 @@ Table of Contents
 
 5.  Overview and Rationale
 
-   Deployed systems (e.g., libwebrtc based) interoperate using a
+   Deployed systems (e.g., [libwebrtc] based) interoperate using a
    non-standard SDP encoding name “multiopus” with fmtp parameters such
    as num_streams, coupled_streams, and channel_mapping.  Standardizing
    these semantics improves interoperability and removes the need for
@@ -164,7 +164,7 @@ Table of Contents
          speaker positions.
 
    *  The channel_mapping values follow the Opus multistream mapping
-      used by libwebrtc.
+      used by [libwebrtc].
 
 7.  Offer/Answer Procedures
 
@@ -219,7 +219,7 @@ Table of Contents
 8.  Informative References
 
    [libwebrtc]
-              "Opus multistream mapping", n.d.,
+              webrtc, "Opus multistream mapping", n.d.,
               <https://webrtc-review.googlesource.com/c/src/+/129768>.
 
    [RFC3264]  Rosenberg, J. and H. Schulzrinne, "An Offer/Answer Model
@@ -239,9 +239,6 @@ Table of Contents
    [RFC7845]  Terriberry, T., Lee, R., and R. Giles, "Ogg Encapsulation
               for the Opus Audio Codec", RFC 7845, DOI 10.17487/RFC7845,
               April 2016, <https://www.rfc-editor.org/rfc/rfc7845>.
-
-   [SVC]      W3C, "Scalable Video Coding (SVC) Extension for WebRTC",
-              n.d., <https://www.w3.org/TR/webrtc-svc>.
 
 Author's Address
 
