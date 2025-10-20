@@ -219,7 +219,7 @@ Table of Contents
 8.  Informative References
 
    [libwebrtc]
-              webrtc, "Opus multistream mapping", n.d.,
+              WebRTC, "Opus multistream mapping", n.d.,
               <https://webrtc-review.googlesource.com/c/src/+/129768>.
 
    [RFC3264]  Rosenberg, J. and H. Schulzrinne, "An Offer/Answer Model
