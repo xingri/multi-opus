@@ -1,7 +1,7 @@
 ---
 title: "RTP/SDP for Opus Multistream"
 abbrev: MULTI-OPUS
-docname: draft-shin-avtcore-rtp-multi-opus-00
+docname: draft-shin-avtcore-rtp-multi-opus-01
 date: 2025-10-19
 category: info
 
