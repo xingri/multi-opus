@@ -6,9 +6,9 @@ date: 2025-10-19
 category: info
 
 ipr: trust200902
-area: General
+area: "Web and Internet Transport"
 submissionType: IETF
-workgroup: avtcore WG
+workgroup: "Audio/Video Transport Core Maintenance"
 keyword: Internet-Draft
 
 stand_alone: yes
@@ -80,8 +80,8 @@ and reuses the mapping semantics from {{?RFC7845}}.
                        +------------------------------+
 
 # Summary of RFCs and This Draft:
-        
-     +------------+----------------------+-----------------------+-----------------------+ 
+
+     +------------+----------------------+-----------------------+-----------------------+
      | RFC/Draft  | Scope                | Defines Channel Map?  | Defines SDP Signaling |
      +------------+----------------------+-----------------------+-----------------------+
      | RFC 6716   | Opus codec           | Yes (API level)       | No                    |
@@ -138,7 +138,7 @@ using multiopus with appropriate fmtp, and SHOULD include a stereo alternative u
 opus/48000/2 ({{?RFC7587}}) for backward compatibility.
 
 An answerer that supports the offered multiopus configuration MUST select the corresponding
-payload type and include the selected multistream parameters in the answer. 
+payload type and include the selected multistream parameters in the answer.
 
 If unsupported, the answerer MAY select a stereo opus payload or reject the m‑section per {{?RFC3264}}.
 Down‑conversion to stereo SHOULD NOT occur silently when the answerer supports the offered configuration.
