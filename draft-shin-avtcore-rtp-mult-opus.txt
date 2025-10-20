@@ -4,8 +4,8 @@
 
 avtcore WG                                                       S. Shin
 Internet-Draft                                                    NVIDIA
-Intended status: Informational                           19 October 2025
-Expires: 22 April 2026
+Intended status: Informational                           20 October 2025
+Expires: 23 April 2026
 
 
                       RTP/SDP for Opus Multistream
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 April 2026.
+   This Internet-Draft will expire on 23 April 2026.
 
 Copyright Notice
 
@@ -63,7 +63,6 @@ Table of Contents
    6.  SDP Signaling for Opus Multistream
      6.1.  SDP Syntax for Multichannel Opus
        6.1.1.  SDP Example for 5.1 Audio
-       6.1.2.  Field Descriptions
    7.  Offer/Answer Procedures
      7.1.  Examples
        7.1.1.  Offer: 5.1 (6 channels)
@@ -134,10 +133,13 @@ Table of Contents
 
 6.1.1.  SDP Example for 5.1 Audio
 
-   sdp a=rtpmap:96 multiopus/48000/6 a=fmtp:96
-   num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+   sdp a=rtpmap:111 multiopus/48000/6 a=fmtp:111
+   num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5 ### SDP
+   Example for 7.1 Audio
 
-6.1.2.  Field Descriptions
+   sdp a=rtpmap:111 multiopus/48000/8 a=fmtp:111
+   num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7 ###
+   Field Descriptions
 
    *  a=rtpmap:<pt> multiopus/48000/<channel-count>
 
