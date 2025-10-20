@@ -1218,13 +1218,13 @@ Opus in RTP sessions, while aligning channel‑mapping semantics with <span>[<a 
       <h2 id="name-relationship-to-existing-rf">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-relationship-to-existing-rf" class="section-name selfRef">Relationship to Existing RFCs</a>
       </h2>
-<p id="section-2-1">This section summarizes the scope and relationship between RFC 6716 (Opus codec),
-RFC 7587 (Opus over RTP), RFC 7845 (Ogg encapsulation of Opus), and this draft.
+<p id="section-2-1">This section summarizes the scope and relationship between <span>[<a href="#RFC6716" class="cite xref">RFC6716</a>]</span> (Opus codec),
+<span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> (Opus over RTP), <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span> (Ogg encapsulation of Opus), and this draft.
 While RFC 7845 defines channel mapping families for multistream Opus in the Ogg
-container, it does not define SDP signaling or RTP usage. RFC 7587 defines the
+container, it does not define SDP signaling or RTP usage. <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> defines the
 RTP payload format for Opus but only covers mono/stereo signaling. This draft
-extends RFC 7587 to define SDP signaling for multistream Opus in RTP sessions
-and reuses the mapping semantics from RFC 7845.<a href="#section-2-1" class="pilcrow">¶</a></p>
+extends <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> to define SDP signaling for multistream Opus in RTP sessions
+and reuses the mapping semantics from <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="relationship-of-rfcs-and-this-draft">
@@ -1275,7 +1275,7 @@ and reuses the mapping semantics from RFC 7845.<a href="#section-2-1" class="pil
       <h2 id="name-overview-and-rationale">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-overview-and-rationale" class="section-name selfRef">Overview and Rationale</a>
       </h2>
-<p id="section-5-1">Deployed systems (e.g., libwebrtc‑based) interoperate using a non‑standard
+<p id="section-5-1">Deployed systems (e.g., libwebrtc based) interoperate using a non‑standard
 SDP encoding name “multiopus” with fmtp parameters such as num_streams,
 coupled_streams, and channel_mapping.
 Standardizing these semantics improves interoperability and removes the need
@@ -1337,7 +1337,7 @@ a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
               </ul>
 </li>
             <li class="normal" id="section-6.1.1-3.3">
-              <p id="section-6.1.1-3.3.1">The <code>channel_mapping</code> values follow the <a href="https://webrtc-review.googlesource.com/c/src/+/129768">Opus multistream mapping</a> used by libwebrtc.<a href="#section-6.1.1-3.3.1" class="pilcrow">¶</a></p>
+              <p id="section-6.1.1-3.3.1">The <code>channel_mapping</code> values follow the Opus multistream mapping used by libwebrtc.<a href="#section-6.1.1-3.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -1351,10 +1351,10 @@ a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
       <h2 id="name-offer-answer-procedures">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-offer-answer-procedures" class="section-name selfRef">Offer/Answer Procedures</a>
       </h2>
-<p id="section-7-1">An offerer willing to negotiate multichannel Opus MAY include one or more payload types using multiopus with appropriate fmtp, and SHOULD include a stereo alternative using opus/48000/2 (RFC 7587) for backward compatibility.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">An offerer willing to negotiate multichannel Opus MAY include one or more payload types using multiopus with appropriate fmtp, and SHOULD include a stereo alternative using opus/48000/2 (<span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>) for backward compatibility.<a href="#section-7-1" class="pilcrow">¶</a></p>
 <p id="section-7-2">An answerer that supports the offered multiopus configuration MUST select the corresponding payload type and include the selected
 multistream parameters in the answer. 
-If unsupported, the answerer MAY select a stereo opus payload or reject the m‑section per RFC 3264.
+If unsupported, the answerer MAY select a stereo opus payload or reject the m‑section per <span>[<a href="#RFC3264" class="cite xref">RFC3264</a>]</span>.
 Down‑conversion to stereo SHOULD NOT occur silently when the answerer supports the offered configuration.<a href="#section-7-2" class="pilcrow">¶</a></p>
 <div id="examples">
 <section id="section-7.1">
@@ -1393,7 +1393,7 @@ a=sendrecv<a href="#section-7.1.2-1" class="pilcrow">¶</a></p>
         <h3 id="name-security-considerations">
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
         </h3>
-<p id="section-7.2-1">The use of the <code>multiopus</code> encoding in SDP does not introduce new security concerns beyond those already described in [RFC 7587]. Implementers should ensure that SDP parsing and RTP payload handling are robust against malformed or malicious input. Applications using multichannel Opus streams must also consider the privacy implications of transmitting spatial audio data, which may reveal environmental context.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.2-1">The use of the <code>multiopus</code> encoding in SDP does not introduce new security concerns beyond those already described in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>. Implementers should ensure that SDP parsing and RTP payload handling are robust against malformed or malicious input. Applications using multichannel Opus streams must also consider the privacy implications of transmitting spatial audio data, which may reveal environmental context.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
 <p id="section-7.2-2">Transport-level security mechanisms such as DTLS-SRTP are recommended to protect RTP streams.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1413,6 +1413,14 @@ a=sendrecv<a href="#section-7.1.2-1" class="pilcrow">¶</a></p>
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
       </h2>
 <dl class="references">
+<dt id="libwebrtc">[libwebrtc]</dt>
+      <dd>
+<span class="refTitle">"Opus multistream mapping"</span>, <span>n.d.</span>, <span>&lt;<a href="https://webrtc-review.googlesource.com/c/src/+/129768">https://webrtc-review.googlesource.com/c/src/+/129768</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3264">[RFC3264]</dt>
+      <dd>
+<span class="refAuthor">Rosenberg, J.</span> and <span class="refAuthor">H. Schulzrinne</span>, <span class="refTitle">"An Offer/Answer Model with Session Description Protocol (SDP)"</span>, <span class="seriesInfo">RFC 3264</span>, <span class="seriesInfo">DOI 10.17487/RFC3264</span>, <time datetime="2002-06" class="refDate">June 2002</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3264">https://www.rfc-editor.org/rfc/rfc3264</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC6716">[RFC6716]</dt>
       <dd>
 <span class="refAuthor">Valin, JM.</span>, <span class="refAuthor">Vos, K.</span>, and <span class="refAuthor">T. Terriberry</span>, <span class="refTitle">"Definition of the Opus Audio Codec"</span>, <span class="seriesInfo">RFC 6716</span>, <span class="seriesInfo">DOI 10.17487/RFC6716</span>, <time datetime="2012-09" class="refDate">September 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6716">https://www.rfc-editor.org/rfc/rfc6716</a>&gt;</span>. </dd>
@@ -1422,8 +1430,12 @@ a=sendrecv<a href="#section-7.1.2-1" class="pilcrow">¶</a></p>
 <span class="refAuthor">Spittka, J.</span>, <span class="refAuthor">Vos, K.</span>, and <span class="refAuthor">JM. Valin</span>, <span class="refTitle">"RTP Payload Format for the Opus Speech and Audio Codec"</span>, <span class="seriesInfo">RFC 7587</span>, <span class="seriesInfo">DOI 10.17487/RFC7587</span>, <time datetime="2015-06" class="refDate">June 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7587">https://www.rfc-editor.org/rfc/rfc7587</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7845">[RFC7845]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Terriberry, T.</span>, <span class="refAuthor">Lee, R.</span>, and <span class="refAuthor">R. Giles</span>, <span class="refTitle">"Ogg Encapsulation for the Opus Audio Codec"</span>, <span class="seriesInfo">RFC 7845</span>, <span class="seriesInfo">DOI 10.17487/RFC7845</span>, <time datetime="2016-04" class="refDate">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7845">https://www.rfc-editor.org/rfc/rfc7845</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SVC">[SVC]</dt>
+    <dd>
+<span class="refAuthor">W3C</span>, <span class="refTitle">"Scalable Video Coding (SVC) Extension for WebRTC"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/webrtc-svc">https://www.w3.org/TR/webrtc-svc</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>

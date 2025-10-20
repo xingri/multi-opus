@@ -86,14 +86,14 @@ Table of Contents
 
 2.  Relationship to Existing RFCs
 
-   This section summarizes the scope and relationship between RFC 6716
-   (Opus codec), RFC 7587 (Opus over RTP), RFC 7845 (Ogg encapsulation
+   This section summarizes the scope and relationship between [RFC6716]
+   (Opus codec), [RFC7587] (Opus over RTP), [RFC7845] (Ogg encapsulation
    of Opus), and this draft.  While RFC 7845 defines channel mapping
    families for multistream Opus in the Ogg container, it does not
-   define SDP signaling or RTP usage.  RFC 7587 defines the RTP payload
+   define SDP signaling or RTP usage.  [RFC7587] defines the RTP payload
    format for Opus but only covers mono/stereo signaling.  This draft
-   extends RFC 7587 to define SDP signaling for multistream Opus in RTP
-   sessions and reuses the mapping semantics from RFC 7845.
+   extends [RFC7587] to define SDP signaling for multistream Opus in RTP
+   sessions and reuses the mapping semantics from [RFC7845].
 
 3.  Relationship of RFCs and This Draft:
 
@@ -124,7 +124,7 @@ Table of Contents
 
 5.  Overview and Rationale
 
-   Deployed systems (e.g., libwebrtc-based) interoperate using a
+   Deployed systems (e.g., libwebrtc based) interoperate using a
    non-standard SDP encoding name “multiopus” with fmtp parameters such
    as num_streams, coupled_streams, and channel_mapping.  Standardizing
    these semantics improves interoperability and removes the need for
@@ -164,22 +164,21 @@ Table of Contents
          speaker positions.
 
    *  The channel_mapping values follow the Opus multistream mapping
-      (https://webrtc-review.googlesource.com/c/src/+/129768) used by
-      libwebrtc.
+      used by libwebrtc.
 
 7.  Offer/Answer Procedures
 
    An offerer willing to negotiate multichannel Opus MAY include one or
    more payload types using multiopus with appropriate fmtp, and SHOULD
-   include a stereo alternative using opus/48000/2 (RFC 7587) for
+   include a stereo alternative using opus/48000/2 ([RFC7587]) for
    backward compatibility.
 
    An answerer that supports the offered multiopus configuration MUST
    select the corresponding payload type and include the selected
    multistream parameters in the answer.  If unsupported, the answerer
-   MAY select a stereo opus payload or reject the m-section per RFC
-   3264.  Down-conversion to stereo SHOULD NOT occur silently when the
-   answerer supports the offered configuration.
+   MAY select a stereo opus payload or reject the m-section per
+   [RFC3264].  Down-conversion to stereo SHOULD NOT occur silently when
+   the answerer supports the offered configuration.
 
 7.1.  Examples
 
@@ -200,7 +199,7 @@ Table of Contents
 7.2.  Security Considerations
 
    The use of the multiopus encoding in SDP does not introduce new
-   security concerns beyond those already described in [RFC 7587].
+   security concerns beyond those already described in [RFC7587].
    Implementers should ensure that SDP parsing and RTP payload handling
    are robust against malformed or malicious input.  Applications using
    multichannel Opus streams must also consider the privacy implications
@@ -219,6 +218,15 @@ Table of Contents
 
 8.  Informative References
 
+   [libwebrtc]
+              "Opus multistream mapping", n.d.,
+              <https://webrtc-review.googlesource.com/c/src/+/129768>.
+
+   [RFC3264]  Rosenberg, J. and H. Schulzrinne, "An Offer/Answer Model
+              with Session Description Protocol (SDP)", RFC 3264,
+              DOI 10.17487/RFC3264, June 2002,
+              <https://www.rfc-editor.org/rfc/rfc3264>.
+
    [RFC6716]  Valin, JM., Vos, K., and T. Terriberry, "Definition of the
               Opus Audio Codec", RFC 6716, DOI 10.17487/RFC6716,
               September 2012, <https://www.rfc-editor.org/rfc/rfc6716>.
@@ -231,6 +239,9 @@ Table of Contents
    [RFC7845]  Terriberry, T., Lee, R., and R. Giles, "Ogg Encapsulation
               for the Opus Audio Codec", RFC 7845, DOI 10.17487/RFC7845,
               April 2016, <https://www.rfc-editor.org/rfc/rfc7845>.
+
+   [SVC]      W3C, "Scalable Video Coding (SVC) Extension for WebRTC",
+              n.d., <https://www.w3.org/TR/webrtc-svc>.
 
 Author's Address
 
