@@ -1164,6 +1164,12 @@ concepts defined for the Ogg container in <span>[<a href="#RFC7845" class="cite 
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
                     <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-sdp-example-for-51-audio" class="internal xref">SDP Example for 5.1 Audio</a></p>
 </li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.2">
+                    <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="auto internal xref">6.1.2</a>.  <a href="#name-sdp-example-for-71-audio" class="internal xref">SDP Example for 7.1 Audio</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.3">
+                    <p id="section-toc.1-1.6.2.1.2.3.1"><a href="#section-6.1.3" class="auto internal xref">6.1.3</a>.  <a href="#name-field-descriptions" class="internal xref">Field Descriptions</a></p>
+</li>
                 </ul>
 </li>
             </ul>
@@ -1302,44 +1308,56 @@ for application‑level SDP text modifications.<a href="#section-5-1" class="pil
 <p id="section-6.1.1-1"><code>sdp
 a=rtpmap:111 multiopus/48000/6
 a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
-</code>
-### SDP Example for 7.1 Audio<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.1-2"><code>sdp
+</code><a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sdp-example-for-71-audio">
+<section id="section-6.1.2">
+          <h4 id="name-sdp-example-for-71-audio">
+<a href="#section-6.1.2" class="section-number selfRef">6.1.2. </a><a href="#name-sdp-example-for-71-audio" class="section-name selfRef">SDP Example for 7.1 Audio</a>
+          </h4>
+<p id="section-6.1.2-1"><code>sdp
 a=rtpmap:111 multiopus/48000/8
 a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
-</code>
-### Field Descriptions<a href="#section-6.1.1-2" class="pilcrow">¶</a></p>
+</code><a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="field-descriptions">
+<section id="section-6.1.3">
+          <h4 id="name-field-descriptions">
+<a href="#section-6.1.3" class="section-number selfRef">6.1.3. </a><a href="#name-field-descriptions" class="section-name selfRef">Field Descriptions</a>
+          </h4>
 <ul class="normal">
-<li class="normal" id="section-6.1.1-3.1">
-              <p id="section-6.1.1-3.1.1"><code>a=rtpmap:&lt;pt&gt; multiopus/48000/&lt;channel-count&gt;</code><a href="#section-6.1.1-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.1.3-1.1">
+              <p id="section-6.1.3-1.1.1"><code>a=rtpmap:&lt;pt&gt; multiopus/48000/&lt;channel-count&gt;</code><a href="#section-6.1.3-1.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.1.1-3.1.2.1">
-                  <p id="section-6.1.1-3.1.2.1.1"><code>&lt;pt&gt;</code>: Dynamic payload type (e.g., 96).<a href="#section-6.1.1-3.1.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.1.3-1.1.2.1">
+                  <p id="section-6.1.3-1.1.2.1.1"><code>&lt;pt&gt;</code>: Dynamic payload type (e.g., 96).<a href="#section-6.1.3-1.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                <li class="normal" id="section-6.1.1-3.1.2.2">
-                  <p id="section-6.1.1-3.1.2.2.1"><code>48000</code>: Fixed clock rate for Opus.<a href="#section-6.1.1-3.1.2.2.1" class="pilcrow">¶</a></p>
+                <li class="normal" id="section-6.1.3-1.1.2.2">
+                  <p id="section-6.1.3-1.1.2.2.1"><code>48000</code>: Fixed clock rate for Opus.<a href="#section-6.1.3-1.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
-                <li class="normal" id="section-6.1.1-3.1.2.3">
-                  <p id="section-6.1.1-3.1.2.3.1"><code>&lt;channel-count&gt;</code>: Total number of output channels (e.g., 6 for 5.1, 8 for 7.1).<a href="#section-6.1.1-3.1.2.3.1" class="pilcrow">¶</a></p>
+                <li class="normal" id="section-6.1.3-1.1.2.3">
+                  <p id="section-6.1.3-1.1.2.3.1"><code>&lt;channel-count&gt;</code>: Total number of output channels (e.g., 6 for 5.1, 8 for 7.1).<a href="#section-6.1.3-1.1.2.3.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
 </li>
-            <li class="normal" id="section-6.1.1-3.2">
-              <p id="section-6.1.1-3.2.1"><code>a=fmtp:&lt;pt&gt; num_streams=&lt;N&gt;;coupled_streams=&lt;M&gt;;channel_mapping=&lt;C&gt;</code><a href="#section-6.1.1-3.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-6.1.3-1.2">
+              <p id="section-6.1.3-1.2.1"><code>a=fmtp:&lt;pt&gt; num_streams=&lt;N&gt;;coupled_streams=&lt;M&gt;;channel_mapping=&lt;C&gt;</code><a href="#section-6.1.3-1.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.1.1-3.2.2.1">
-                  <p id="section-6.1.1-3.2.2.1.1"><code>num_streams</code>: Total number of Opus streams.<a href="#section-6.1.1-3.2.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.1.3-1.2.2.1">
+                  <p id="section-6.1.3-1.2.2.1.1"><code>num_streams</code>: Total number of Opus streams.<a href="#section-6.1.3-1.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                <li class="normal" id="section-6.1.1-3.2.2.2">
-                  <p id="section-6.1.1-3.2.2.2.1"><code>coupled_streams</code>: Number of stereo (coupled) streams.<a href="#section-6.1.1-3.2.2.2.1" class="pilcrow">¶</a></p>
+                <li class="normal" id="section-6.1.3-1.2.2.2">
+                  <p id="section-6.1.3-1.2.2.2.1"><code>coupled_streams</code>: Number of stereo (coupled) streams.<a href="#section-6.1.3-1.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
-                <li class="normal" id="section-6.1.1-3.2.2.3">
-                  <p id="section-6.1.1-3.2.2.3.1"><code>channel_mapping</code>: Comma-separated list mapping RTP channels to speaker positions.<a href="#section-6.1.1-3.2.2.3.1" class="pilcrow">¶</a></p>
+                <li class="normal" id="section-6.1.3-1.2.2.3">
+                  <p id="section-6.1.3-1.2.2.3.1"><code>channel_mapping</code>: Comma-separated list mapping RTP channels to speaker positions.<a href="#section-6.1.3-1.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
 </li>
-            <li class="normal" id="section-6.1.1-3.3">
-              <p id="section-6.1.1-3.3.1">The <code>channel_mapping</code> values follow the Opus multistream mapping used by <span>[<a href="#libwebrtc" class="cite xref">libwebrtc</a>]</span>.<a href="#section-6.1.1-3.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-6.1.3-1.3">
+              <p id="section-6.1.3-1.3.1">The <code>channel_mapping</code> values follow the Opus multistream mapping used by <span>[<a href="#libwebrtc" class="cite xref">libwebrtc</a>]</span>.<a href="#section-6.1.3-1.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
