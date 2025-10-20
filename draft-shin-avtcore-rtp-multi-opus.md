@@ -108,12 +108,14 @@ for application‑level SDP text modifications.
 a=rtpmap:111 multiopus/48000/6
 a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
 ```
+
 ### SDP Example for 7.1 Audio
 
 ```sdp
 a=rtpmap:111 multiopus/48000/8
 a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
 ```
+
 ### Field Descriptions
 
 - `a=rtpmap:<pt> multiopus/48000/<channel-count>`
@@ -152,7 +154,6 @@ a=rtpmap:111 multiopus/48000/6
 a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
 a=rtpmap:112 opus/48000/2
 a=sendrecv
-
 
 ### Answer: accept 5.1
 
