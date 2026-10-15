@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>RTP/SDP Signaling for Opus Multistream Operation</title>
+<meta content="Sun Shin" name="author">
+<meta content='
+       This document specifies RTP/SDP signaling for Opus multistream (multichannel) operation,
+enabling negotiation of layouts such as 5.1 and 7.1 in real-time communications.
+It defines SDP format parameters for describing multistream configurations and specifies
+Offer/Answer procedures for interoperable negotiation of multichannel Opus sessions.
+This document does not define new Opus codec behavior. Rather, it standardizes
+SDP signaling for Opus multistream operation while continuing to use the Opus RTP payload
+format defined in   and the channel mapping semantics defined in  .
+The signaling procedures specified in this document are intended to provide
+a standardized alternative to deployment-specific approaches that have historically
+been referred to as "multiopus". 
+    ' name="description">
+<meta content="xml2rfc 3.34.1" name="generator">
+<meta content="Internet-Draft" name="keyword">
+<meta content="draft-shin-avtcore-rtp-multi-opus-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.34.1
+    Python 3.14.8
+    ConfigArgParse 1.8.0
+    google-i18n-address 3.1.1
+    intervaltree 3.2.1
+    Jinja2 3.1.6
+    lxml 6.1.1
+    natsort 8.4.0
+    platformdirs 4.12.2
+    pycountry 24.6.1
+    PyYAML 6.0.3
+    requests 2.33.1
+    wcwidth 0.9.1
+-->
+<link href="draft-shin-avtcore-rtp-multi-opus.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  --font-title: "Sofia Sans Semi Condensed", sans-serif;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+section {
+  clear: both;
+}
+.section-number {
+  padding-right: 0.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 680;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1 {
+  &#title {
+    font-size: 32px;
+    line-height: 40px;
+    clear: both;
+    margin: 1.5em 0 0.2em;
+  }
+  &#rfcnum {
+    margin: 1.5em 0 0.2em;
+    & + h1#title {
+      margin: 0.2em 0;
+    }
+  }
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+  & code, & samp, & tt {
+    font-size: 16px;
+    line-height: 0;
+  }
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight {
+  margin: 1em 0;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    margin: 0;
+    float: right;
+    clear: both;
+  }
+  & > *:nth-child(2) {
+    clear: both;
+    display: block;
+    border: none;
+  }
+}
+svg {
+  display: block;
+  /* font-family isn't space-separated, but =~ will have to do */
+  &[font-family~="monospace" i], & [font-family~="monospace" i] {
+    font-family: var(--font-mono);
+  }
+}
+.alignCenter {
+  margin: 1em 0;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+       support flexbox yet.
+    */
+    display: table;
+    margin: 0 auto;
+  }
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+  & :is(ol, ul) {
+    margin-left: 1em;
+  }
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+  & li {
+    margin-top: 0.5em;
+  }
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  margin: 0 0 0 2em;
+  & li {
+    margin: 0;
+    & :first-child { margin-top: 0; }
+    & :last-child { margin-bottom: 0; }
+  }
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+  &.olPercent {
+    --indent: 5ch;
+    & > dt {
+      min-width: calc(var(--indent) - 2ch);
+      float: none;
+    }
+  }
+
+  dl > dd > & {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+
+  &:not(.dlNewline) > dt {
+    float: left;
+    margin-right: 2ch;
+    min-width: 8ch;
+  }
+  & > dd {
+    margin-bottom: .8em;
+    margin-left: var(--indent) !important; /* stupid element overrides */
+    min-height: 2ex;
+  }
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+  & > :is(:first-child, .break:first-child + *) {
+    margin-top: 0;
+  }
+  & > :is(:last-child) {
+    margin-bottom: 0;
+  }
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a {
+  text-decoration: none;
+  &[href] {
+    color: var(--link-color);
+    &:hover { text-decoration: underline; }
+    &.selfRef {
+      color: var(--text-color);
+      &:hover {
+        text-decoration: none;
+        background-color: var(--highlight-color);
+      }
+    }
+  }
+}
+.iref + a[href].internal {
+  color: var(--text-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+  & blockquote {
+    margin: 0.8em 0.4em 0.4em;
+  }
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+  caption-side: bottom;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) {
+    & p {
+      margin: -2px 0;
+      max-height: 0;
+      transition: max-height 2s ease, margin 0.5s ease 0.5s;
+      overflow: hidden;
+    }
+    &:hover p,
+    & h2:target ~ p {
+      margin: 0.5em 0;
+      max-height: 500px;
+      overflow: auto;
+    }
+  }
+  pre, svg {
+    display: inline-block;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  &.right { margin-left: auto; }
+  &.center { margin-left: auto; margin-right: auto; }
+  &.left { margin-right: auto; }
+  & .text-left { text-align: left; }
+  & .text-center { text-align: center; }
+  & .text-right { text-align: right; }
+  & caption {
+    margin: 0;
+    padding: 3px 0 3px 1em;
+  }
+  & p { margin: 0; }
+}
+
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+  &[href] {
+    color: var(--pilcrow-weak);
+    &:hover { text-decoration: none; }
+  }
+  @media not print {
+    :hover > &, &:focus {
+      opacity: 1;
+    }
+    &[href]:hover {
+      color: var(--pilcrow-strong);
+      background-color: transparent;
+    }
+  }
+  @media print {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+  & dt {
+    width: var(--identifier-width);
+    min-width: var(--identifier-width);
+    clear: left;
+    float: left;
+    text-align: right;
+    margin-right: 1ch;
+  }
+  & dd {
+    margin: 0;
+    margin-left: calc(1em + var(--identifier-width)) !important;
+    min-width: 5em;
+  }
+  & .authors {
+    & .author {
+      display: inline-block;
+      margin-right: 1.5em;
+    }
+    & .org {
+      font-style: italic;
+    }
+  }
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+  & .prepared {
+    float: right;
+  }
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+
+  & nav {
+    & ul {
+      margin: 0 0.5em 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    & li {
+      line-height: 1.3em;
+      margin: 2px 0;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+    }
+  }
+  & a.xref {
+    white-space: normal;
+  }
+}
+
+.references {
+  & > dt {
+    text-align: right;
+    font-weight: bold;
+    min-width: 10ch;
+    margin-right: 1.5ch;
+    &:target::before {
+      content: "⇒";
+      margin: 0 10px 0 -25px;
+    }
+  }
+  & > dd {
+    margin-left: 12ch !important;
+    overflow: visible;
+    & .refInstance {
+      margin-bottom: 0.8em;
+    }
+    & .ascii {
+      margin-bottom: 0.25em;
+    }
+  }
+}
+
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  max-width: 20em;
+  margin: 1em auto 1em 0;
+
+  & .nameRole {
+    font-weight: 700;
+    margin-left: 0;
+  }
+  & .label {
+    margin: 0.5em 0;
+  }
+  & .type {
+    display: none;
+  }
+  & .alternative-contact {
+    margin: 0.5em 0 0.25em 0;
+  }
+  & .non-ascii {
+    margin: 0 0 0 2em;
+  }
+  & div.left {
+    text-align: left;
+  }
+  & div.right {
+    text-align: right;
+  }
+}
+
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses {
+    & > section {
+      column-count: 2;
+      column-gap: 20px;
+    }
+    & > section > h2 {
+      column-span: all;
+    }
+    /* hack for break-inside: avoid-column */
+    & address {
+      display: inline-block;
+      break-inside: avoid-column;
+    }
+  }
+}
+
+/* Comments */
+.rfcEditorRemove {
+  & p:first-of-type {
+    font-style: italic;
+  }
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+
+@media screen {
+  #toc {
+    & nav {
+      font-family: var(--font-title);
+      font-weight: 360;
+      & > ul { margin-bottom: 2em; }
+      & ul {
+        margin: 0 0 0 4px;
+        & :is(p, li) {
+          margin: 2px 0;
+        }
+      }
+    }
+    & a.toplink {
+      float: right;
+    }
+  }
+}
+@media not screen {
+  #toc a.toplink {
+    display: none;
+  }
+}
+
+
+/* TOC layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+    & h2 {
+      margin: 0;
+      padding: 2px 0 2px 6px;
+      padding-right: 1em;
+      font-size: 18px;
+      line-height: 24px;
+      min-width: 190px;
+      text-align: right;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+      &::before { /* css hamburger */
+        float: right;
+        position: relative;
+        width: 1em;
+        height: 1px;
+        left: -164px;
+        margin: 8px 0 0 0;
+        background: white none repeat scroll 0 0;
+        box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+        content: "";
+      }
+    }
+    & nav {
+      display: none;
+      background-color: var(--background-color);
+      padding: 0.5em 1em 1em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      height: calc(100vh - 48px);
+      border-left: 1px solid #ddd;
+    }
+    &.active {
+      opacity: 1;
+      & nav { display: block; }
+    }
+    /* Make the collapsed ToC header render white on gray also when it's a link */
+    & h2 a,
+    & h2 a:is(:link, :focus, :hover),
+    & a.toplink,
+    & a.toplink:hover {
+      color: white;
+      background-color: #444;
+      text-decoration: none;
+    }
+    & a.toplink {
+      margin: 2px 0.5em 0;
+    }
+  }
+}
+
+/* TOC layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    & h2 {
+      margin: 0;
+      padding: 0.25em 1em 1em 0;
+    }
+    & nav {
+      display: block;
+      height: calc(90vh - 84px);
+      bottom: 0;
+      padding: 0.5em 0 2em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+    }
+    & a.toplink {
+      margin: 8px 0.5em 0;
+    }
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc {
+    page-break-before: always;
+    border-top: none;
+    padding-top: 0;
+  }
+  #n-introduction {
+    page-break-before: always;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg {
+  & :is([stroke="black"], [stroke^="#000"]) {
+    stroke: var(--text-color);
+  }
+  & :is([stroke="white"], [stroke^="#fff"]) {
+    stroke: var(--background-color);
+  }
+  & :is([fill="black"], [fill^="#000"], :not([fill])) {
+    fill: var(--text-color);
+  }
+  & :is([fill="white"], [fill^="#fff"]) {
+    fill: var(--background-color);
+  }
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">OPUS-MULTISTREAM</td>
+<td class="right">October 2026</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Shin</td>
+<td class="center">Expires 17 April 2027</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Audio/Video Transport Core Maintenance</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-shin-avtcore-rtp-multi-opus-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2026-10-14" class="published">14 October 2026</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2027-04-17">17 April 2027</time></dd>
+<dt class="label-authors">Author:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">S. Shin</div>
+<div class="org">NVIDIA</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">RTP/SDP Signaling for Opus Multistream Operation</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">This document specifies RTP/SDP signaling for Opus multistream (multichannel) operation,
+enabling negotiation of layouts such as 5.1 and 7.1 in real-time communications.
+It defines SDP format parameters for describing multistream configurations and specifies
+Offer/Answer procedures for interoperable negotiation of multichannel Opus sessions.
+This document does not define new Opus codec behavior. Rather, it standardizes
+SDP signaling for Opus multistream operation while continuing to use the Opus RTP payload
+format defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> and the channel mapping semantics defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.
+The signaling procedures specified in this document are intended to provide
+a standardized alternative to deployment-specific approaches that have historically
+been referred to as "multiopus".<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-discussion-venues">
+<a href="#name-discussion-venues" class="section-name selfRef">Discussion Venues</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">Discussion of this document takes place on the
+    Audio/Video Transport Core Maintenance Working Group mailing list (avt@ietf.org),
+    which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/avt/">https://mailarchive.ietf.org/arch/browse/avt/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">Source for this draft and an issue tracker can be found at
+    <span><a href="https://github.com/xingri/multi-opus">https://github.com/xingri/multi-opus</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 17 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2026 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-relationship-to-existing-rf" class="internal xref">Relationship to Existing RFCs</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-relationship-of-rfcs-and-th" class="internal xref">Relationship of RFCs and This Draft</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-summary-of-rfcs-and-this-do" class="internal xref">Summary of RFCs and This Document</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-overview-and-rationale" class="internal xref">Overview and Rationale</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-sdp-parameters-for-opus-mul" class="internal xref">SDP Parameters for Opus Multistream</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-field-descriptions" class="internal xref">Field Descriptions</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-mapping-families-and-extens" class="internal xref">Mapping Families and Extensibility</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-field-presence-and-constrai" class="internal xref">Field Presence and Constraints</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-sdp-examples" class="internal xref">SDP Examples</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4.2.1">
+                    <p id="section-toc.1-1.6.2.4.2.1.1"><a href="#section-6.4.1" class="auto internal xref">6.4.1</a>.  <a href="#name-51-audio" class="internal xref">5.1 Audio</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4.2.2">
+                    <p id="section-toc.1-1.6.2.4.2.2.1"><a href="#section-6.4.2" class="auto internal xref">6.4.2</a>.  <a href="#name-71-audio" class="internal xref">7.1 Audio</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-offer-answer-procedures" class="internal xref">Offer/Answer Procedures</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.1">
+                    <p id="section-toc.1-1.7.2.1.2.1.1"><a href="#section-7.1.1" class="auto internal xref">7.1.1</a>.  <a href="#name-offer-51-audio-6-channels" class="internal xref">Offer: 5.1 Audio (6 channels)</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.2">
+                    <p id="section-toc.1-1.7.2.1.2.2.1"><a href="#section-7.1.2" class="auto internal xref">7.1.2</a>.  <a href="#name-answer-accept-51-audio" class="internal xref">Answer: Accept 5.1 Audio</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">Opus (<span>[<a href="#RFC6716" class="cite xref">RFC6716</a>]</span>) supports multistream encoding and channel mapping, enabling representation
+of multichannel audio configurations beyond mono and stereo. The RTP payload format for Opus
+defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> specifies signaling and transport procedures for Opus in RTP sessions,
+but primarily focuses on mono and stereo operation and does not define SDP signaling
+procedures for multistream multichannel configurations.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2"><span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span> defines channel mapping families for Opus carried in the Ogg container format.
+These mapping families assign semantic meaning to decoded output channels, such as speaker
+positions for surround sound layouts. The channel mappings do not alter the Opus bitstream
+or RTP payload format but define how decoded channels are to be interpreted by receivers.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">Several deployed implementations have supported multichannel Opus using implementation-specific
+SDP signaling approaches, commonly referred to as "multiopus". While these approaches have
+enabled deployment of surround-sound audio in practical systems, they have not been standardized
+and may present interoperability challenges across implementations.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">This document specifies interoperable SDP signaling and Offer/Answer procedures for Opus
+multistream operation in RTP sessions while continuing to use the Opus RTP payload format
+defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> and the channel mapping semantics defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">This document is limited to RTP/SDP signaling for Opus multistream configurations already
+supported by <span>[<a href="#RFC6716" class="cite xref">RFC6716</a>]</span>, <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>, and <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>. It does not define new Opus codec
+features, bitstream formats, RTP payload formats, or decoding behavior.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">The MLCODEC Working Group is defining extensions to the Opus codec that may introduce
+additional codec capabilities. Such extensions are outside the scope of this document.
+Future Opus extensions may reuse the SDP signaling framework defined here, subject to
+the requirements and constraints of their respective specifications.<a href="#section-1-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="relationship-to-existing-rfcs">
+<section id="section-2">
+      <h2 id="name-relationship-to-existing-rf">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-relationship-to-existing-rf" class="section-name selfRef">Relationship to Existing RFCs</a>
+      </h2>
+<p id="section-2-1">This section summarizes the scope and relationship between <span>[<a href="#RFC6716" class="cite xref">RFC6716</a>]</span> (Opus codec),
+<span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> (Opus over RTP), <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span> (Ogg encapsulation of Opus), and this document.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2"><span>[<a href="#RFC6716" class="cite xref">RFC6716</a>]</span> defines the Opus codec, including support for multistream encoding and
+channel mapping.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3"><span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> defines RTP transport and SDP signaling for Opus in RTP sessions but
+primarily addresses mono and stereo operation.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4"><span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span> defines channel mapping families for Opus carried in the Ogg container format.
+These mappings provide semantic interpretation of decoded output channels but do not
+define RTP usage or SDP signaling procedures.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">This document specifies SDP signaling and Offer/Answer procedures for Opus multistream operation
+in RTP sessions while continuing to use the RTP payload format defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> and
+the channel mapping semantics defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-2-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="relationship-of-rfcs-and-this-draft">
+<section id="section-3">
+      <h2 id="name-relationship-of-rfcs-and-th">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-relationship-of-rfcs-and-th" class="section-name selfRef">Relationship of RFCs and This Draft</a>
+      </h2>
+<div class="alignLeft art-text artwork" id="section-3-1">
+<pre>
+  +----------------+     +-------------------+     +----------------+
+  |   RFC 6716     |     |     RFC 7845      |     |   RFC 7587     |
+  |  Opus Codec    |     | Ogg Encapsulation |     | Opus over RTP  |
+  +----------------+     +-------------------+     +----------------+
+           |                       |                        |
+           |                       |                        |
+           +-----------------------+------------------------+
+                                   |
+                                   v
+                   +------------------------------+
+                   |         This Document        |
+                   |      Opus Multistream SDP    |
+                   |      Signaling Framework     |
+                   +------------------------------+
+</pre><a href="#section-3-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="summary-of-rfcs-and-this-document">
+<section id="section-4">
+      <h2 id="name-summary-of-rfcs-and-this-do">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-summary-of-rfcs-and-this-do" class="section-name selfRef">Summary of RFCs and This Document</a>
+      </h2>
+<div class="alignLeft art-text artwork" id="section-4-1">
+<pre>
+ +------------+------------------------+-----------------------+-----------------------+
+ | RFC/Doc    | Primary Scope          | Channel Mapping       | SDP Signaling         |
+ +------------+------------------------+-----------------------+-----------------------+
+ | RFC 6716   | Opus codec             | Yes                   | No                    |
+ | RFC 7845   | Ogg encapsulation      | Yes (families)        | No                    |
+ | RFC 7587   | Opus RTP payload       | Mono/Stereo only      | Yes (mono/stereo)     |
+ | This Doc   | Multistream SDP rules  | Reuses RFC 7845       | Yes (multichannel)    |
+ +------------+------------------------+-----------------------+-----------------------+
+</pre><a href="#section-4-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="overview-and-rationale">
+<section id="section-5">
+      <h2 id="name-overview-and-rationale">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-overview-and-rationale" class="section-name selfRef">Overview and Rationale</a>
+      </h2>
+<p id="section-5-1">Opus supports multistream operation and channel mappings that enable multichannel audio
+configurations such as 5.1 and 7.1. While such configurations have been deployed in practice,
+interoperable SDP signaling for these configurations has not been standardized for RTP sessions.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">Several deployed implementations (e.g., <span>[<a href="#libwebrtc" class="cite xref">libwebrtc</a>]</span> based) have historically used
+implementation-specific SDP signaling approaches, commonly referred to as "multiopus",
+together with parameters such as num_streams, coupled_streams, and channel_mapping.
+Although these approaches have enabled deployment of multichannel Opus,
+they are not standardized and may lead to interoperability challenges.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">This document standardizes SDP signaling semantics for Opus multistream operation while
+continuing to use the Opus RTP payload format defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>. Standardizing these semantics
+improves interoperability and removes the need for application-specific SDP modifications.<a href="#section-5-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sdp-parameters-for-opus-multistream">
+<section id="section-6">
+      <h2 id="name-sdp-parameters-for-opus-mul">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-sdp-parameters-for-opus-mul" class="section-name selfRef">SDP Parameters for Opus Multistream</a>
+      </h2>
+<div id="field-descriptions">
+<section id="section-6.1">
+        <h3 id="name-field-descriptions">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-field-descriptions" class="section-name selfRef">Field Descriptions</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="section-6.1-1.1">
+            <p id="section-6.1-1.1.1"><code>a=rtpmap:&lt;pt&gt; opus/&lt;clock-rate&gt;/&lt;channel-count&gt;</code><a href="#section-6.1-1.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.1-1.1.2.1">
+                <p id="section-6.1-1.1.2.1.1"><code>&lt;pt&gt;</code>: Dynamic payload type (e.g., 96).<a href="#section-6.1-1.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-6.1-1.1.2.2">
+                <p id="section-6.1-1.1.2.2.1"><code>&lt;clock-rate&gt;</code>: Fixed Opus RTP clock rate of 48000 Hz, as defined in
+<span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>. This placeholder represents the literal value <code>48000</code>
+in actual SDP.<a href="#section-6.1-1.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-6.1-1.1.2.3">
+                <p id="section-6.1-1.1.2.3.1"><code>&lt;channel-count&gt;</code>: Total number of output channels resulting from decoding.<a href="#section-6.1-1.1.2.3.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-6.1-1.2">
+            <p id="section-6.1-1.2.1"><code>a=fmtp:&lt;pt&gt; num_streams=&lt;N&gt;;coupled_streams=&lt;M&gt;;channel_mapping=&lt;C&gt;</code><a href="#section-6.1-1.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.1-1.2.2.1">
+                <p id="section-6.1-1.2.2.1.1"><code>&lt;pt&gt;</code>: Same payload type as in the corresponding <code>a=rtpmap</code> attribute.<a href="#section-6.1-1.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-6.1-1.2.2.2">
+                <p id="section-6.1-1.2.2.2.1"><code>num_streams</code>: Total number of Opus streams.<a href="#section-6.1-1.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-6.1-1.2.2.3">
+                <p id="section-6.1-1.2.2.3.1"><code>coupled_streams</code>: Number of stereo (coupled) streams.<a href="#section-6.1-1.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-6.1-1.2.2.4">
+                <p id="section-6.1-1.2.2.4.1"><code>channel_mapping</code>: Comma-separated list defining the mapping from decoded
+channels to semantic output positions according to the channel mapping semantics
+defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.1-1.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+        </ul>
+</section>
+</div>
+<div id="mapping-families-and-extensibility">
+<section id="section-6.2">
+        <h3 id="name-mapping-families-and-extens">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-mapping-families-and-extens" class="section-name selfRef">Mapping Families and Extensibility</a>
+        </h3>
+<p id="section-6.2-1">Channel mapping families define the semantic interpretation of decoded output channels
+and do not alter the Opus bitstream or RTP payload format.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.2-2">This document normatively specifies SDP signaling for Mapping Family 1
+(channel-based speaker layouts) as defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
+<p id="section-6.2-3">The signaling framework is designed to be extensible to additional mapping families,
+including Ambisonics or externally defined mappings, without requiring changes to
+the underlying Opus RTP payload format.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
+<p id="section-6.2-4">An endpoint that receives an offer specifying a mapping family it does not support
+MUST reject the corresponding payload type during Offer/Answer negotiation.<a href="#section-6.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="field-presence-and-constraints">
+<section id="section-6.3">
+        <h3 id="name-field-presence-and-constrai">
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-field-presence-and-constrai" class="section-name selfRef">Field Presence and Constraints</a>
+        </h3>
+<p id="section-6.3-1">The "channel_mapping" parameter MUST be present when the number of
+output channels exceeds two.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.3-2">For configurations with one or two output channels, the channel_mapping parameter
+MAY be omitted. If omitted, the receiver MUST interpret the configuration according
+to Mapping Family 0 semantics defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
+<p id="section-6.3-3">The values of "num_streams", "coupled_streams", and each entry in "channel_mapping"
+MUST be integers in the range 0 to 255.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
+<p id="section-6.3-4">For Mapping Family 1, the number of output channels MUST NOT exceed eight.<a href="#section-6.3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sdp-examples">
+<section id="section-6.4">
+        <h3 id="name-sdp-examples">
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-sdp-examples" class="section-name selfRef">SDP Examples</a>
+        </h3>
+<div id="audio">
+<section id="section-6.4.1">
+          <h4 id="name-51-audio">
+<a href="#section-6.4.1" class="section-number selfRef">6.4.1. </a><a href="#name-51-audio" class="section-name selfRef">5.1 Audio</a>
+          </h4>
+<p id="section-6.4.1-1">The following example signals six output channels using four Opus streams,
+two of which are coupled streams.<a href="#section-6.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.4.1-2"><code>sdp
+a=rtpmap:111 opus/48000/6
+a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+</code><a href="#section-6.4.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="audio-1">
+<section id="section-6.4.2">
+          <h4 id="name-71-audio">
+<a href="#section-6.4.2" class="section-number selfRef">6.4.2. </a><a href="#name-71-audio" class="section-name selfRef">7.1 Audio</a>
+          </h4>
+<p id="section-6.4.2-1">The following example signals eight output channels using five Opus streams,
+three of which are coupled streams.<a href="#section-6.4.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.4.2-2"><code>sdp
+a=rtpmap:111 opus/48000/8
+a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
+</code><a href="#section-6.4.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="offeranswer-procedures">
+<section id="section-7">
+      <h2 id="name-offer-answer-procedures">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-offer-answer-procedures" class="section-name selfRef">Offer/Answer Procedures</a>
+      </h2>
+<p id="section-7-1">An offerer willing to negotiate multichannel Opus MAY include one or more
+Opus multistream payload configurations with the appropriate format parameters.
+For backward compatibility, an offerer SHOULD also include a stereo alternative
+using <code>opus/&lt;clock-rate&gt;/2</code> as defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">An answerer MAY accept an offered multistream configuration if it can parse
+the offered parameters and decode the resulting multichannel audio without loss
+of the negotiated channel semantics.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-3">If the answerer supports the offered multistream Opus configuration, it MUST select
+the corresponding payload type and include the selected parameters in the answer.<a href="#section-7-3" class="pilcrow">¶</a></p>
+<p id="section-7-4">If the offered configuration is not supported, the answerer MAY select a stereo
+Opus payload type or reject the media section according to <span>[<a href="#RFC3264" class="cite xref">RFC3264</a>]</span>.<a href="#section-7-4" class="pilcrow">¶</a></p>
+<p id="section-7-5">An answerer SHOULD NOT silently down-convert decoded output to stereo without
+providing an indication of that behavior to the application.<a href="#section-7-5" class="pilcrow">¶</a></p>
+<div id="examples">
+<section id="section-7.1">
+        <h3 id="name-examples">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
+        </h3>
+<div id="offer-51-audio-6-channels">
+<section id="section-7.1.1">
+          <h4 id="name-offer-51-audio-6-channels">
+<a href="#section-7.1.1" class="section-number selfRef">7.1.1. </a><a href="#name-offer-51-audio-6-channels" class="section-name selfRef">Offer: 5.1 Audio (6 channels)</a>
+          </h4>
+<p id="section-7.1.1-1">The following offer advertises a 5.1 multistream Opus configuration using
+payload type 111 and a stereo Opus fallback using payload type 112 for
+backward compatibility.<a href="#section-7.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-2"><code>sdp
+m=audio 9 UDP/TLS/RTP/SAVPF 111 112
+a=mid:audio
+a=rtpmap:111 opus/48000/6
+a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+a=rtpmap:112 opus/48000/2
+a=sendrecv
+</code><a href="#section-7.1.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="answer-accept-51-audio">
+<section id="section-7.1.2">
+          <h4 id="name-answer-accept-51-audio">
+<a href="#section-7.1.2" class="section-number selfRef">7.1.2. </a><a href="#name-answer-accept-51-audio" class="section-name selfRef">Answer: Accept 5.1 Audio</a>
+          </h4>
+<p id="section-7.1.2-1">The answer selects payload type 111 and echoes the negotiated multistream
+parameters, indicating support for the offered 5.1-channel layout.<a href="#section-7.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.1.2-2"><code>sdp
+m=audio 9 UDP/TLS/RTP/SAVPF 111
+a=mid:audio
+a=rtpmap:111 opus/48000/6
+a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+a=sendrecv
+</code><a href="#section-7.1.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-8">
+      <h2 id="name-security-considerations">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-8-1">The SDP signaling procedures defined in this document do not introduce security considerations
+beyond those already described in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-2">Implementations SHOULD ensure that SDP parsing and RTP payload handling are robust against
+malformed or malicious input. Implementations SHOULD validate multistream configuration parameters,
+including channel mappings, stream counts, and coupled-stream counts, before use.<a href="#section-8-2" class="pilcrow">¶</a></p>
+<p id="section-8-3">Applications using multichannel Opus streams should also consider the privacy implications of
+transmitting spatial audio information, which may reveal environmental or application context
+beyond that conveyed by mono or stereo audio.<a href="#section-8-3" class="pilcrow">¶</a></p>
+<p id="section-8-4">Transport-level security mechanisms such as DTLS-SRTP are RECOMMENDED to protect RTP streams
+from unauthorized access or modification.<a href="#section-8-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-9">
+      <h2 id="name-iana-considerations">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-9-1">This document does not request registration of a new RTP payload format or media subtype.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-9-2">The SDP parameters defined by this specification are intended for use with the existing
+Opus RTP payload format defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>.<a href="#section-9-2" class="pilcrow">¶</a></p>
+<p id="section-9-3">No IANA action is required by this document.<a href="#section-9-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="acknowledgements">
+<section id="section-10">
+      <h2 id="name-acknowledgements">
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+      </h2>
+<p id="section-10-1">The author would like to thank Philipp Hancke for his detailed review and constructive
+feedback during the AVTCORE adoption discussion. His comments helped shape the direction
+of this document from standardizing a deployment-specific "multiopus" signaling approach
+toward specifying interoperable SDP signaling for Opus multistream operation while
+continuing to use the Opus RTP payload format defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<p id="section-10-2">The author would also like to thank Hyunsik Yang for his careful review of the document and
+for identifying editorial issues and textual improvements during the adoption process.<a href="#section-10-2" class="pilcrow">¶</a></p>
+<p id="section-10-3">The author further thanks Erik Språng, Timothy Terriberry, Mo Zanaty, the AVTCORE chairs,
+and other working group participants for their review, comments, and support.<a href="#section-10-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-11">
+      <h2 id="name-informative-references">
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+      </h2>
+<dl class="references">
+<dt id="libwebrtc">[libwebrtc]</dt>
+      <dd>
+<span class="refAuthor">WebRTC</span>, <span class="refTitle">"Opus multistream mapping"</span>, <span>n.d.</span>, <span>&lt;<a href="https://webrtc-review.googlesource.com/c/src/+/129768">https://webrtc-review.googlesource.com/c/src/+/129768</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3264">[RFC3264]</dt>
+      <dd>
+<span class="refAuthor">Rosenberg, J.</span> and <span class="refAuthor">H. Schulzrinne</span>, <span class="refTitle">"An Offer/Answer Model with Session Description Protocol (SDP)"</span>, <span class="seriesInfo">RFC 3264</span>, <span class="seriesInfo">DOI 10.17487/RFC3264</span>, <time datetime="2002-07" class="refDate">July 2002</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3264">https://www.rfc-editor.org/rfc/rfc3264</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6716">[RFC6716]</dt>
+      <dd>
+<span class="refAuthor">Valin, JM.</span>, <span class="refAuthor">Vos, K.</span>, and <span class="refAuthor">T. Terriberry</span>, <span class="refTitle">"Definition of the Opus Audio Codec"</span>, <span class="seriesInfo">RFC 6716</span>, <span class="seriesInfo">DOI 10.17487/RFC6716</span>, <time datetime="2012-09" class="refDate">September 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6716">https://www.rfc-editor.org/rfc/rfc6716</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7587">[RFC7587]</dt>
+      <dd>
+<span class="refAuthor">Spittka, J.</span>, <span class="refAuthor">Vos, K.</span>, and <span class="refAuthor">JM. Valin</span>, <span class="refTitle">"RTP Payload Format for the Opus Speech and Audio Codec"</span>, <span class="seriesInfo">RFC 7587</span>, <span class="seriesInfo">DOI 10.17487/RFC7587</span>, <time datetime="2015-06" class="refDate">June 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7587">https://www.rfc-editor.org/rfc/rfc7587</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7845">[RFC7845]</dt>
+    <dd>
+<span class="refAuthor">Terriberry, T.</span>, <span class="refAuthor">Lee, R.</span>, and <span class="refAuthor">R. Giles</span>, <span class="refTitle">"Ogg Encapsulation for the Opus Audio Codec"</span>, <span class="seriesInfo">RFC 7845</span>, <span class="seriesInfo">DOI 10.17487/RFC7845</span>, <time datetime="2016-04" class="refDate">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7845">https://www.rfc-editor.org/rfc/rfc7845</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-A">
+      <h2 id="name-authors-address">
+<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Sun Shin</span></div>
+<div dir="auto" class="left"><span class="org">NVIDIA</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:sushin@nvidia.com" class="email">sushin@nvidia.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
