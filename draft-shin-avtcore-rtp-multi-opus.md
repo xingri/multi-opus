@@ -141,19 +141,21 @@ improves interoperability and removes the need for application-specific SDP modi
 
 # SDP Parameters for Opus Multistream
 
-## SDP Example for 5.1 Audio
+## Field Descriptions
 
-```sdp
-a=rtpmap:111 opus/48000/6
-a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
-```
+- `a=rtpmap:<pt> opus/<clock-rate>/<channel-count>`
+  - `<pt>`: Dynamic payload type (e.g., 96).
+  - `<clock-rate>`: Fixed Opus RTP clock rate of 48000 Hz, as defined in
+    {{?RFC7587}}. This placeholder represents the literal value `48000`
+    in actual SDP.
+  - `<channel-count>`: Total number of output channels resulting from decoding.
 
-## SDP Example for 7.1 Audio
-
-```sdp
-a=rtpmap:111 opus/48000/8
-a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
-```
+- `a=fmtp:<pt> num_streams=<N>;coupled_streams=<M>;channel_mapping=<C>`
+  - `num_streams`: Total number of Opus streams.
+  - `coupled_streams`: Number of stereo (coupled) streams.
+  - `channel_mapping`: Comma-separated list defining the mapping from decoded
+channels to semantic output positions according to the channel mapping semantics
+defined in {{?RFC7845}}.
 
 ## Mapping Families and Extensibility
 
@@ -170,20 +172,6 @@ the underlying Opus RTP payload format.
 An endpoint that receives an offer specifying a mapping family it does not support
 MUST reject the corresponding payload type during Offer/Answer negotiation.
 
-## Field Descriptions
-
-- `a=rtpmap:<pt> opus/48000/<channel-count>`
-  - `<pt>`: Dynamic payload type (e.g., 96).
-  - `48000`: Fixed clock rate for Opus.
-  - `<channel-count>`: Total number of output channels resulting from decoding.
-
-- `a=fmtp:<pt> num_streams=<N>;coupled_streams=<M>;channel_mapping=<C>`
-  - `num_streams`: Total number of Opus streams.
-  - `coupled_streams`: Number of stereo (coupled) streams.
-  - `channel_mapping`: Comma-separated list defining the mapping from decoded
-channels to semantic output positions according to the channel mapping semantics
-defined in {{?RFC7845}}.
-
 ## Field Presence and Constraints
 
 The "channel_mapping" parameter MUST be present when the number of
@@ -198,12 +186,34 @@ MUST be integers in the range 0 to 255.
 
 For Mapping Family 1, the number of output channels MUST NOT exceed eight.
 
+## SDP Examples
+
+### 5.1 Audio
+
+The following example signals six output channels using four Opus streams,
+two of which are coupled streams.
+
+```sdp
+a=rtpmap:111 opus/48000/6
+a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+```
+
+### 7.1 Audio
+
+The following example signals eight output channels using five Opus streams,
+three of which are coupled streams.
+
+```sdp
+a=rtpmap:111 opus/48000/8
+a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
+```
+
 # Offer/Answer Procedures
 
 An offerer willing to negotiate multichannel Opus MAY include one or more
 Opus multistream payload configurations with the appropriate format parameters.
 For backward compatibility, an offerer SHOULD also include a stereo alternative
-using opus/48000/2 as defined in {{?RFC7587}}.
+using opus/<clock-rate>/2 as defined in {{?RFC7587}}.
 
 An answerer MAY accept an offered multistream configuration if it can parse
 the offered parameters and decode the resulting multichannel audio without loss
@@ -222,6 +232,10 @@ providing an indication of that behavior to the application.
 
 ### Offer: 5.1 Audio (6 channels)
 
+The following offer advertises a 5.1 multistream Opus configuration using
+payload type 111 and a stereo Opus fallback using payload type 112 for
+backward compatibility.
+
 ```sdp
 m=audio 9 UDP/TLS/RTP/SAVPF 111 112
 a=mid:audio
@@ -233,6 +247,9 @@ a=sendrecv
 
 ### Answer: Accept 5.1 Audio
 
+The answer selects payload type 111 and echoes the negotiated multistream
+parameters, indicating support for the offered 5.1-channel layout.
+
 ```sdp
 m=audio 9 UDP/TLS/RTP/SAVPF 111
 a=mid:audio
@@ -240,10 +257,6 @@ a=rtpmap:111 opus/48000/6
 a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
 a=sendrecv
 ```
-
-The offer above advertises both a multistream Opus configuration and a stereo Opus fallback
-for backward compatibility. The answer selects the multistream configuration and echoes
-the negotiated parameters, indicating support for the offered 5.1-channel layout.
 
 # Security Considerations
 
