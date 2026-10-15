@@ -151,6 +151,7 @@ improves interoperability and removes the need for application-specific SDP modi
   - `<channel-count>`: Total number of output channels resulting from decoding.
 
 - `a=fmtp:<pt> num_streams=<N>;coupled_streams=<M>;channel_mapping=<C>`
+  - `<pt>`: Same payload type as in the corresponding `a=rtpmap` attribute.
   - `num_streams`: Total number of Opus streams.
   - `coupled_streams`: Number of stereo (coupled) streams.
   - `channel_mapping`: Comma-separated list defining the mapping from decoded
