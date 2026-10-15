@@ -76,11 +76,12 @@ Table of Contents
    4.  Summary of RFCs and This Document
    5.  Overview and Rationale
    6.  SDP Parameters for Opus Multistream
-     6.1.  SDP Example for 5.1 Audio
-     6.2.  SDP Example for 7.1 Audio
-     6.3.  Mapping Families and Extensibility
-     6.4.  Field Descriptions
-     6.5.  Field Presence and Constraints
+     6.1.  Field Descriptions
+     6.2.  Mapping Families and Extensibility
+     6.3.  Field Presence and Constraints
+     6.4.  SDP Examples
+       6.4.1.  5.1 Audio
+       6.4.2.  7.1 Audio
    7.  Offer/Answer Procedures
      7.1.  Examples
        7.1.1.  Offer: 5.1 Audio (6 channels)
@@ -204,17 +205,31 @@ Table of Contents
 
 6.  SDP Parameters for Opus Multistream
 
-6.1.  SDP Example for 5.1 Audio
+6.1.  Field Descriptions
 
-   sdp a=rtpmap:111 opus/48000/6 a=fmtp:111
-   num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+   *  a=rtpmap:<pt> opus/<clock-rate>/<channel-count>
 
-6.2.  SDP Example for 7.1 Audio
+      -  <pt>: Dynamic payload type (e.g., 96).
 
-   sdp a=rtpmap:111 opus/48000/8 a=fmtp:111
-   num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
+      -  <clock-rate>: Fixed Opus RTP clock rate of 48000 Hz, as defined
+         in [RFC7587].  This placeholder represents the literal value
+         48000 in actual SDP.
 
-6.3.  Mapping Families and Extensibility
+      -  <channel-count>: Total number of output channels resulting from
+         decoding.
+
+   *  a=fmtp:<pt>
+      num_streams=<N>;coupled_streams=<M>;channel_mapping=<C>
+
+      -  num_streams: Total number of Opus streams.
+
+      -  coupled_streams: Number of stereo (coupled) streams.
+
+      -  channel_mapping: Comma-separated list defining the mapping from
+         decoded channels to semantic output positions according to the
+         channel mapping semantics defined in [RFC7845].
+
+6.2.  Mapping Families and Extensibility
 
    Channel mapping families define the semantic interpretation of
    decoded output channels and do not alter the Opus bitstream or RTP
@@ -232,29 +247,7 @@ Table of Contents
    does not support MUST reject the corresponding payload type during
    Offer/Answer negotiation.
 
-6.4.  Field Descriptions
-
-   *  a=rtpmap:<pt> opus/48000/<channel-count>
-
-      -  <pt>: Dynamic payload type (e.g., 96).
-
-      -  48000: Fixed clock rate for Opus.
-
-      -  <channel-count>: Total number of output channels resulting from
-         decoding.
-
-   *  a=fmtp:<pt>
-      num_streams=<N>;coupled_streams=<M>;channel_mapping=<C>
-
-      -  num_streams: Total number of Opus streams.
-
-      -  coupled_streams: Number of stereo (coupled) streams.
-
-      -  channel_mapping: Comma-separated list defining the mapping from
-         decoded channels to semantic output positions according to the
-         channel mapping semantics defined in [RFC7845].
-
-6.5.  Field Presence and Constraints
+6.3.  Field Presence and Constraints
 
    The "channel_mapping" parameter MUST be present when the number of
    output channels exceeds two.
@@ -270,13 +263,31 @@ Table of Contents
    For Mapping Family 1, the number of output channels MUST NOT exceed
    eight.
 
+6.4.  SDP Examples
+
+6.4.1.  5.1 Audio
+
+   The following example signals six output channels using four Opus
+   streams, two of which are coupled streams.
+
+   sdp a=rtpmap:111 opus/48000/6 a=fmtp:111
+   num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+
+6.4.2.  7.1 Audio
+
+   The following example signals eight output channels using five Opus
+   streams, three of which are coupled streams.
+
+   sdp a=rtpmap:111 opus/48000/8 a=fmtp:111
+   num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
+
 7.  Offer/Answer Procedures
 
    An offerer willing to negotiate multichannel Opus MAY include one or
    more Opus multistream payload configurations with the appropriate
    format parameters.  For backward compatibility, an offerer SHOULD
-   also include a stereo alternative using opus/48000/2 as defined in
-   [RFC7587].
+   also include a stereo alternative using opus/<clock-rate>/2 as
+   defined in [RFC7587].
 
    An answerer MAY accept an offered multistream configuration if it can
    parse the offered parameters and decode the resulting multichannel
@@ -297,6 +308,10 @@ Table of Contents
 
 7.1.1.  Offer: 5.1 Audio (6 channels)
 
+   The following offer advertises a 5.1 multistream Opus configuration
+   using payload type 111 and a stereo Opus fallback using payload type
+   112 for backward compatibility.
+
    sdp m=audio 9 UDP/TLS/RTP/SAVPF 111 112 a=mid:audio a=rtpmap:111
    opus/48000/6 a=fmtp:111
    num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
@@ -304,15 +319,14 @@ Table of Contents
 
 7.1.2.  Answer: Accept 5.1 Audio
 
+   The answer selects payload type 111 and echoes the negotiated
+   multistream parameters, indicating support for the offered
+   5.1-channel layout.
+
    sdp m=audio 9 UDP/TLS/RTP/SAVPF 111 a=mid:audio a=rtpmap:111
    opus/48000/6 a=fmtp:111
    num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
    a=sendrecv
-
-   The offer above advertises both a multistream Opus configuration and
-   a stereo Opus fallback for backward compatibility.  The answer
-   selects the multistream configuration and echoes the negotiated
-   parameters, indicating support for the offered 5.1-channel layout.
 
 8.  Security Considerations
 

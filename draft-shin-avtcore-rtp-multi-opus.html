@@ -1174,19 +1174,24 @@ been referred to as "multiopus".<a href="#section-abstract-1" class="pilcrow">¶
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-sdp-parameters-for-opus-mul" class="internal xref">SDP Parameters for Opus Multistream</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-sdp-example-for-51-audio" class="internal xref">SDP Example for 5.1 Audio</a></p>
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-field-descriptions" class="internal xref">Field Descriptions</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
-                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-sdp-example-for-71-audio" class="internal xref">SDP Example for 7.1 Audio</a></p>
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-mapping-families-and-extens" class="internal xref">Mapping Families and Extensibility</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
-                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-mapping-families-and-extens" class="internal xref">Mapping Families and Extensibility</a></p>
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-field-presence-and-constrai" class="internal xref">Field Presence and Constraints</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
-                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-field-descriptions" class="internal xref">Field Descriptions</a></p>
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-sdp-examples" class="internal xref">SDP Examples</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4.2.1">
+                    <p id="section-toc.1-1.6.2.4.2.1.1"><a href="#section-6.4.1" class="auto internal xref">6.4.1</a>.  <a href="#name-51-audio" class="internal xref">5.1 Audio</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.5">
-                <p id="section-toc.1-1.6.2.5.1"><a href="#section-6.5" class="auto internal xref">6.5</a>.  <a href="#name-field-presence-and-constrai" class="internal xref">Field Presence and Constraints</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4.2.2">
+                    <p id="section-toc.1-1.6.2.4.2.2.1"><a href="#section-6.4.2" class="auto internal xref">6.4.2</a>.  <a href="#name-71-audio" class="internal xref">7.1 Audio</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -1341,96 +1346,109 @@ improves interoperability and removes the need for application-specific SDP modi
       <h2 id="name-sdp-parameters-for-opus-mul">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-sdp-parameters-for-opus-mul" class="section-name selfRef">SDP Parameters for Opus Multistream</a>
       </h2>
-<div id="sdp-example-for-51-audio">
-<section id="section-6.1">
-        <h3 id="name-sdp-example-for-51-audio">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-sdp-example-for-51-audio" class="section-name selfRef">SDP Example for 5.1 Audio</a>
-        </h3>
-<p id="section-6.1-1"><code>sdp
-a=rtpmap:111 opus/48000/6
-a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
-</code><a href="#section-6.1-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="sdp-example-for-71-audio">
-<section id="section-6.2">
-        <h3 id="name-sdp-example-for-71-audio">
-<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-sdp-example-for-71-audio" class="section-name selfRef">SDP Example for 7.1 Audio</a>
-        </h3>
-<p id="section-6.2-1"><code>sdp
-a=rtpmap:111 opus/48000/8
-a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
-</code><a href="#section-6.2-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="mapping-families-and-extensibility">
-<section id="section-6.3">
-        <h3 id="name-mapping-families-and-extens">
-<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-mapping-families-and-extens" class="section-name selfRef">Mapping Families and Extensibility</a>
-        </h3>
-<p id="section-6.3-1">Channel mapping families define the semantic interpretation of decoded output channels
-and do not alter the Opus bitstream or RTP payload format.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
-<p id="section-6.3-2">This document normatively specifies SDP signaling for Mapping Family 1
-(channel-based speaker layouts) as defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
-<p id="section-6.3-3">The signaling framework is designed to be extensible to additional mapping families,
-including Ambisonics or externally defined mappings, without requiring changes to
-the underlying Opus RTP payload format.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
-<p id="section-6.3-4">An endpoint that receives an offer specifying a mapping family it does not support
-MUST reject the corresponding payload type during Offer/Answer negotiation.<a href="#section-6.3-4" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="field-descriptions">
-<section id="section-6.4">
+<section id="section-6.1">
         <h3 id="name-field-descriptions">
-<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-field-descriptions" class="section-name selfRef">Field Descriptions</a>
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-field-descriptions" class="section-name selfRef">Field Descriptions</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="section-6.4-1.1">
-            <p id="section-6.4-1.1.1"><code>a=rtpmap:&lt;pt&gt; opus/48000/&lt;channel-count&gt;</code><a href="#section-6.4-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.1-1.1">
+            <p id="section-6.1-1.1.1"><code>a=rtpmap:&lt;pt&gt; opus/&lt;clock-rate&gt;/&lt;channel-count&gt;</code><a href="#section-6.1-1.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.4-1.1.2.1">
-                <p id="section-6.4-1.1.2.1.1"><code>&lt;pt&gt;</code>: Dynamic payload type (e.g., 96).<a href="#section-6.4-1.1.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.1-1.1.2.1">
+                <p id="section-6.1-1.1.2.1.1"><code>&lt;pt&gt;</code>: Dynamic payload type (e.g., 96).<a href="#section-6.1-1.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-6.4-1.1.2.2">
-                <p id="section-6.4-1.1.2.2.1"><code>48000</code>: Fixed clock rate for Opus.<a href="#section-6.4-1.1.2.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-6.1-1.1.2.2">
+                <p id="section-6.1-1.1.2.2.1"><code>&lt;clock-rate&gt;</code>: Fixed Opus RTP clock rate of 48000 Hz, as defined in
+<span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>. This placeholder represents the literal value <code>48000</code>
+in actual SDP.<a href="#section-6.1-1.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-6.4-1.1.2.3">
-                <p id="section-6.4-1.1.2.3.1"><code>&lt;channel-count&gt;</code>: Total number of output channels resulting from decoding.<a href="#section-6.4-1.1.2.3.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-6.1-1.1.2.3">
+                <p id="section-6.1-1.1.2.3.1"><code>&lt;channel-count&gt;</code>: Total number of output channels resulting from decoding.<a href="#section-6.1-1.1.2.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
-          <li class="normal" id="section-6.4-1.2">
-            <p id="section-6.4-1.2.1"><code>a=fmtp:&lt;pt&gt; num_streams=&lt;N&gt;;coupled_streams=&lt;M&gt;;channel_mapping=&lt;C&gt;</code><a href="#section-6.4-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-6.1-1.2">
+            <p id="section-6.1-1.2.1"><code>a=fmtp:&lt;pt&gt; num_streams=&lt;N&gt;;coupled_streams=&lt;M&gt;;channel_mapping=&lt;C&gt;</code><a href="#section-6.1-1.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.4-1.2.2.1">
-                <p id="section-6.4-1.2.2.1.1"><code>num_streams</code>: Total number of Opus streams.<a href="#section-6.4-1.2.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.1-1.2.2.1">
+                <p id="section-6.1-1.2.2.1.1"><code>num_streams</code>: Total number of Opus streams.<a href="#section-6.1-1.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-6.4-1.2.2.2">
-                <p id="section-6.4-1.2.2.2.1"><code>coupled_streams</code>: Number of stereo (coupled) streams.<a href="#section-6.4-1.2.2.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-6.1-1.2.2.2">
+                <p id="section-6.1-1.2.2.2.1"><code>coupled_streams</code>: Number of stereo (coupled) streams.<a href="#section-6.1-1.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-6.4-1.2.2.3">
-                <p id="section-6.4-1.2.2.3.1"><code>channel_mapping</code>: Comma-separated list defining the mapping from decoded
+              <li class="normal" id="section-6.1-1.2.2.3">
+                <p id="section-6.1-1.2.2.3.1"><code>channel_mapping</code>: Comma-separated list defining the mapping from decoded
 channels to semantic output positions according to the channel mapping semantics
-defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.4-1.2.2.3.1" class="pilcrow">¶</a></p>
+defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.1-1.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
         </ul>
 </section>
 </div>
-<div id="field-presence-and-constraints">
-<section id="section-6.5">
-        <h3 id="name-field-presence-and-constrai">
-<a href="#section-6.5" class="section-number selfRef">6.5. </a><a href="#name-field-presence-and-constrai" class="section-name selfRef">Field Presence and Constraints</a>
+<div id="mapping-families-and-extensibility">
+<section id="section-6.2">
+        <h3 id="name-mapping-families-and-extens">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-mapping-families-and-extens" class="section-name selfRef">Mapping Families and Extensibility</a>
         </h3>
-<p id="section-6.5-1">The "channel_mapping" parameter MUST be present when the number of
-output channels exceeds two.<a href="#section-6.5-1" class="pilcrow">¶</a></p>
-<p id="section-6.5-2">For configurations with one or two output channels, the channel_mapping parameter
+<p id="section-6.2-1">Channel mapping families define the semantic interpretation of decoded output channels
+and do not alter the Opus bitstream or RTP payload format.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.2-2">This document normatively specifies SDP signaling for Mapping Family 1
+(channel-based speaker layouts) as defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
+<p id="section-6.2-3">The signaling framework is designed to be extensible to additional mapping families,
+including Ambisonics or externally defined mappings, without requiring changes to
+the underlying Opus RTP payload format.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
+<p id="section-6.2-4">An endpoint that receives an offer specifying a mapping family it does not support
+MUST reject the corresponding payload type during Offer/Answer negotiation.<a href="#section-6.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="field-presence-and-constraints">
+<section id="section-6.3">
+        <h3 id="name-field-presence-and-constrai">
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-field-presence-and-constrai" class="section-name selfRef">Field Presence and Constraints</a>
+        </h3>
+<p id="section-6.3-1">The "channel_mapping" parameter MUST be present when the number of
+output channels exceeds two.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.3-2">For configurations with one or two output channels, the channel_mapping parameter
 MAY be omitted. If omitted, the receiver MUST interpret the configuration according
-to Mapping Family 0 semantics defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.5-2" class="pilcrow">¶</a></p>
-<p id="section-6.5-3">The values of "num_streams", "coupled_streams", and each entry in "channel_mapping"
-MUST be integers in the range 0 to 255.<a href="#section-6.5-3" class="pilcrow">¶</a></p>
-<p id="section-6.5-4">For Mapping Family 1, the number of output channels MUST NOT exceed eight.<a href="#section-6.5-4" class="pilcrow">¶</a></p>
+to Mapping Family 0 semantics defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
+<p id="section-6.3-3">The values of "num_streams", "coupled_streams", and each entry in "channel_mapping"
+MUST be integers in the range 0 to 255.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
+<p id="section-6.3-4">For Mapping Family 1, the number of output channels MUST NOT exceed eight.<a href="#section-6.3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sdp-examples">
+<section id="section-6.4">
+        <h3 id="name-sdp-examples">
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-sdp-examples" class="section-name selfRef">SDP Examples</a>
+        </h3>
+<div id="audio">
+<section id="section-6.4.1">
+          <h4 id="name-51-audio">
+<a href="#section-6.4.1" class="section-number selfRef">6.4.1. </a><a href="#name-51-audio" class="section-name selfRef">5.1 Audio</a>
+          </h4>
+<p id="section-6.4.1-1">The following example signals six output channels using four Opus streams,
+two of which are coupled streams.<a href="#section-6.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.4.1-2"><code>sdp
+a=rtpmap:111 opus/48000/6
+a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+</code><a href="#section-6.4.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="audio-1">
+<section id="section-6.4.2">
+          <h4 id="name-71-audio">
+<a href="#section-6.4.2" class="section-number selfRef">6.4.2. </a><a href="#name-71-audio" class="section-name selfRef">7.1 Audio</a>
+          </h4>
+<p id="section-6.4.2-1">The following example signals eight output channels using five Opus streams,
+three of which are coupled streams.<a href="#section-6.4.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.4.2-2"><code>sdp
+a=rtpmap:111 opus/48000/8
+a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
+</code><a href="#section-6.4.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 </section>
@@ -1443,7 +1461,7 @@ MUST be integers in the range 0 to 255.<a href="#section-6.5-3" class="pilcrow">
 <p id="section-7-1">An offerer willing to negotiate multichannel Opus MAY include one or more
 Opus multistream payload configurations with the appropriate format parameters.
 For backward compatibility, an offerer SHOULD also include a stereo alternative
-using opus/48000/2 as defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>.<a href="#section-7-1" class="pilcrow">¶</a></p>
+using <code>opus/&lt;clock-rate&gt;/2</code> as defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>.<a href="#section-7-1" class="pilcrow">¶</a></p>
 <p id="section-7-2">An answerer MAY accept an offered multistream configuration if it can parse
 the offered parameters and decode the resulting multichannel audio without loss
 of the negotiated channel semantics.<a href="#section-7-2" class="pilcrow">¶</a></p>
@@ -1463,14 +1481,17 @@ providing an indication of that behavior to the application.<a href="#section-7-
           <h4 id="name-offer-51-audio-6-channels">
 <a href="#section-7.1.1" class="section-number selfRef">7.1.1. </a><a href="#name-offer-51-audio-6-channels" class="section-name selfRef">Offer: 5.1 Audio (6 channels)</a>
           </h4>
-<p id="section-7.1.1-1"><code>sdp
+<p id="section-7.1.1-1">The following offer advertises a 5.1 multistream Opus configuration using
+payload type 111 and a stereo Opus fallback using payload type 112 for
+backward compatibility.<a href="#section-7.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-2"><code>sdp
 m=audio 9 UDP/TLS/RTP/SAVPF 111 112
 a=mid:audio
 a=rtpmap:111 opus/48000/6
 a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
 a=rtpmap:112 opus/48000/2
 a=sendrecv
-</code><a href="#section-7.1.1-1" class="pilcrow">¶</a></p>
+</code><a href="#section-7.1.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="answer-accept-51-audio">
@@ -1478,16 +1499,15 @@ a=sendrecv
           <h4 id="name-answer-accept-51-audio">
 <a href="#section-7.1.2" class="section-number selfRef">7.1.2. </a><a href="#name-answer-accept-51-audio" class="section-name selfRef">Answer: Accept 5.1 Audio</a>
           </h4>
-<p id="section-7.1.2-1"><code>sdp
+<p id="section-7.1.2-1">The answer selects payload type 111 and echoes the negotiated multistream
+parameters, indicating support for the offered 5.1-channel layout.<a href="#section-7.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.1.2-2"><code>sdp
 m=audio 9 UDP/TLS/RTP/SAVPF 111
 a=mid:audio
 a=rtpmap:111 opus/48000/6
 a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
 a=sendrecv
-</code><a href="#section-7.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-7.1.2-2">The offer above advertises both a multistream Opus configuration and a stereo Opus fallback
-for backward compatibility. The answer selects the multistream configuration and echoes
-the negotiated parameters, indicating support for the offered 5.1-channel layout.<a href="#section-7.1.2-2" class="pilcrow">¶</a></p>
+</code><a href="#section-7.1.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
