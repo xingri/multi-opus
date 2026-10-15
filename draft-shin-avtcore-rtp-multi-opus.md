@@ -213,7 +213,7 @@ a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
 An offerer willing to negotiate multichannel Opus MAY include one or more
 Opus multistream payload configurations with the appropriate format parameters.
 For backward compatibility, an offerer SHOULD also include a stereo alternative
-using opus/<clock-rate>/2 as defined in {{?RFC7587}}.
+using `opus/<clock-rate>/2` as defined in {{?RFC7587}}.
 
 An answerer MAY accept an offered multistream configuration if it can parse
 the offered parameters and decode the resulting multichannel audio without loss
