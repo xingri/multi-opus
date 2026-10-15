@@ -221,6 +221,9 @@ Table of Contents
    *  a=fmtp:<pt>
       num_streams=<N>;coupled_streams=<M>;channel_mapping=<C>
 
+      -  <pt>: Same payload type as in the corresponding a=rtpmap
+         attribute.
+
       -  num_streams: Total number of Opus streams.
 
       -  coupled_streams: Number of stereo (coupled) streams.

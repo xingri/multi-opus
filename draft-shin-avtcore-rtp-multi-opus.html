@@ -1372,15 +1372,18 @@ in actual SDP.<a href="#section-6.1-1.1.2.2.1" class="pilcrow">¶</a></p>
             <p id="section-6.1-1.2.1"><code>a=fmtp:&lt;pt&gt; num_streams=&lt;N&gt;;coupled_streams=&lt;M&gt;;channel_mapping=&lt;C&gt;</code><a href="#section-6.1-1.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1-1.2.2.1">
-                <p id="section-6.1-1.2.2.1.1"><code>num_streams</code>: Total number of Opus streams.<a href="#section-6.1-1.2.2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-6.1-1.2.2.1.1"><code>&lt;pt&gt;</code>: Same payload type as in the corresponding <code>a=rtpmap</code> attribute.<a href="#section-6.1-1.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-6.1-1.2.2.2">
-                <p id="section-6.1-1.2.2.2.1"><code>coupled_streams</code>: Number of stereo (coupled) streams.<a href="#section-6.1-1.2.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-6.1-1.2.2.2.1"><code>num_streams</code>: Total number of Opus streams.<a href="#section-6.1-1.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-6.1-1.2.2.3">
-                <p id="section-6.1-1.2.2.3.1"><code>channel_mapping</code>: Comma-separated list defining the mapping from decoded
+                <p id="section-6.1-1.2.2.3.1"><code>coupled_streams</code>: Number of stereo (coupled) streams.<a href="#section-6.1-1.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-6.1-1.2.2.4">
+                <p id="section-6.1-1.2.2.4.1"><code>channel_mapping</code>: Comma-separated list defining the mapping from decoded
 channels to semantic output positions according to the channel mapping semantics
-defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.1-1.2.2.3.1" class="pilcrow">¶</a></p>
+defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.1-1.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
