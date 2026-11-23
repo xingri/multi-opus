@@ -2,7 +2,7 @@
 title: "RTP/SDP Signaling for Opus Multistream Operation"
 abbrev: OPUS-MULTISTREAM
 docname: draft-shin-avtcore-rtp-multi-opus-latest
-date: 2026-10-14
+date: 2026-11-23
 category: info
 
 ipr: trust200902
@@ -44,7 +44,6 @@ been referred to as "multiopus".
 
 --- middle
 
-
 # Introduction
 
 Opus ({{?RFC6716}}) supports multistream encoding and channel mapping, enabling representation
@@ -76,10 +75,19 @@ additional codec capabilities. Such extensions are outside the scope of this doc
 Future Opus extensions may reuse the SDP signaling framework defined here, subject to
 the requirements and constraints of their respective specifications.
 
+# Conventions and Definitions
+
+{::boilerplate bcp14}
+
+The SDP examples are media-level fragments. Long lines use the folding
+convention in {{?RFC8792}}. Remove the folding header, trailing backslash,
+line break, and leading whitespace on the continuation line before using
+the SDP.
+
 # Relationship to Existing RFCs
 
-This section summarizes the scope and relationship between {{?RFC6716}} (Opus codec),
-{{?RFC7587}} (Opus over RTP), {{?RFC7845}} (Ogg encapsulation of Opus), and this document.
+This section summarizes the scope and relationship between {{!RFC6716}} (Opus codec),
+{{!RFC7587}} (Opus over RTP), {{!RFC7845}} (Ogg encapsulation of Opus), and this document.
 
 {{?RFC6716}} defines the Opus codec, including support for multistream encoding and
 channel mapping.
@@ -95,33 +103,32 @@ This document specifies SDP signaling and Offer/Answer procedures for Opus multi
 in RTP sessions while continuing to use the RTP payload format defined in {{?RFC7587}} and
 the channel mapping semantics defined in {{?RFC7845}}.
 
-# Relationship of RFCs and This Draft
+## Relationship of RFCs and This Draft
 
-      +----------------+     +-------------------+     +----------------+
-      |   RFC 6716     |     |     RFC 7845      |     |   RFC 7587     |
-      |  Opus Codec    |     | Ogg Encapsulation |     | Opus over RTP  |
-      +----------------+     +-------------------+     +----------------+
-               |                       |                        |
-               |                       |                        |
-               +-----------------------+------------------------+
-                                       |
-                                       v
-                       +------------------------------+
-                       |         This Document        |
-                       |      Opus Multistream SDP    |
-                       |      Signaling Framework     |
-                       +------------------------------+
+~~~ ascii-art
++----------------+   +-------------------+   +----------------+
+|   RFC 6716     |   |     RFC 7845      |   |   RFC 7587     |
+|  Opus Codec    |   | Ogg Encapsulation |   | Opus over RTP  |
++----------------+   +-------------------+   +----------------+
+         |                     |                     |
+         +---------------------+---------------------+
+                               |
+                               v
+                +------------------------------+
+                |         This Document        |
+                |      Opus Multistream SDP    |
+                |      Signaling Framework     |
+                +------------------------------+
+~~~
 
-# Summary of RFCs and This Document
+## Summary of RFCs and This Document
 
-     +------------+------------------------+-----------------------+-----------------------+
-     | RFC/Doc    | Primary Scope          | Channel Mapping       | SDP Signaling         |
-     +------------+------------------------+-----------------------+-----------------------+
-     | RFC 6716   | Opus codec             | Yes                   | No                    |
-     | RFC 7845   | Ogg encapsulation      | Yes (families)        | No                    |
-     | RFC 7587   | Opus RTP payload       | Mono/Stereo only      | Yes (mono/stereo)     |
-     | This Doc   | Multistream SDP rules  | Reuses RFC 7845       | Yes (multichannel)    |
-     +------------+------------------------+-----------------------+-----------------------+
+| RFC/Doc  | Primary Scope         | Channel Mapping  | SDP Signaling      |
+|----------|-----------------------|------------------|--------------------|
+| RFC 6716 | Opus codec            | Yes              | No                 |
+| RFC 7845 | Ogg encapsulation     | Yes (families)   | No                 |
+| RFC 7587 | Opus RTP payload      | Mono/stereo only | Yes (mono/stereo)  |
+| This Doc | Multistream SDP rules | Reuses RFC 7845  | Yes (multichannel) |
 
 # Overview and Rationale
 
@@ -131,7 +138,7 @@ interoperable SDP signaling for these configurations has not been standardized f
 
 Several deployed implementations (e.g., {{libwebrtc}} based) have historically used
 implementation-specific SDP signaling approaches, commonly referred to as "multiopus",
-together with parameters such as num_streams, coupled_streams, and channel_mapping.
+together with parameters such as `num_streams`, `coupled_streams`, and `channel_mapping`.
 Although these approaches have enabled deployment of multichannel Opus,
 they are not standardized and may lead to interoperability challenges.
 
@@ -144,19 +151,21 @@ improves interoperability and removes the need for application-specific SDP modi
 ## Field Descriptions
 
 - `a=rtpmap:<pt> opus/<clock-rate>/<channel-count>`
-  - `<pt>`: Dynamic payload type (e.g., 96).
-  - `<clock-rate>`: Fixed Opus RTP clock rate of 48000 Hz, as defined in
-    {{?RFC7587}}. This placeholder represents the literal value `48000`
-    in actual SDP.
-  - `<channel-count>`: Total number of output channels resulting from decoding.
+
+    - `<pt>`: Dynamic payload type (e.g., 96).
+    - `<clock-rate>`: Fixed Opus RTP clock rate of 48000 Hz, as defined in
+      {{?RFC7587}}. This placeholder represents the literal value `48000`
+      in actual SDP.
+    - `<channel-count>`: Total number of output channels resulting from decoding.
 
 - `a=fmtp:<pt> num_streams=<N>;coupled_streams=<M>;channel_mapping=<C>`
-  - `<pt>`: Same payload type as in the corresponding `a=rtpmap` attribute.
-  - `num_streams`: Total number of Opus streams.
-  - `coupled_streams`: Number of stereo (coupled) streams.
-  - `channel_mapping`: Comma-separated list defining the mapping from decoded
-channels to semantic output positions according to the channel mapping semantics
-defined in {{?RFC7845}}.
+
+    - `<pt>`: Same payload type as in the corresponding `a=rtpmap` attribute.
+    - `num_streams`: Total number of Opus streams.
+    - `coupled_streams`: Number of stereo (coupled) streams.
+    - `channel_mapping`: Comma-separated list defining the mapping from decoded
+      channels to semantic output positions according to the channel mapping
+      semantics defined in {{?RFC7845}}.
 
 ## Mapping Families and Extensibility
 
@@ -175,15 +184,18 @@ MUST reject the corresponding payload type during Offer/Answer negotiation.
 
 ## Field Presence and Constraints
 
-The "channel_mapping" parameter MUST be present when the number of
+The `channel_mapping` parameter MUST be present when the number of
 output channels exceeds two.
 
-For configurations with one or two output channels, the channel_mapping parameter
+For configurations with one or two output channels, the `channel_mapping` parameter
 MAY be omitted. If omitted, the receiver MUST interpret the configuration according
 to Mapping Family 0 semantics defined in {{?RFC7845}}.
 
-The values of "num_streams", "coupled_streams", and each entry in "channel_mapping"
+The values of `num_streams`, `coupled_streams`, and each entry in `channel_mapping`
 MUST be integers in the range 0 to 255.
+
+These ranges describe the representation limits of the parameters and do not override
+constraints imposed by the selected channel mapping family.
 
 For Mapping Family 1, the number of output channels MUST NOT exceed eight.
 
@@ -194,20 +206,26 @@ For Mapping Family 1, the number of output channels MUST NOT exceed eight.
 The following example signals six output channels using four Opus streams,
 two of which are coupled streams.
 
-```sdp
+~~~ sdp
+NOTE: '\' line wrapping per RFC 8792
+
 a=rtpmap:111 opus/48000/6
-a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
-```
+a=fmtp:111 num_streams=4;coupled_streams=2;\
+  channel_mapping=0,4,1,2,3,5
+~~~
 
 ### 7.1 Audio
 
 The following example signals eight output channels using five Opus streams,
 three of which are coupled streams.
 
-```sdp
+~~~ sdp
+NOTE: '\' line wrapping per RFC 8792
+
 a=rtpmap:111 opus/48000/8
-a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
-```
+a=fmtp:111 num_streams=5;coupled_streams=3;\
+  channel_mapping=0,6,1,2,3,4,5,7
+~~~
 
 # Offer/Answer Procedures
 
@@ -216,18 +234,28 @@ Opus multistream payload configurations with the appropriate format parameters.
 For backward compatibility, an offerer SHOULD also include a stereo alternative
 using `opus/<clock-rate>/2` as defined in {{?RFC7587}}.
 
-An answerer MAY accept an offered multistream configuration if it can parse
-the offered parameters and decode the resulting multichannel audio without loss
-of the negotiated channel semantics.
+An answerer MAY accept an offered multistream Opus configuration if it supports
+the signaled multistream parameters and can decode the resulting audio
+configuration.
 
-If the answerer supports the offered multistream Opus configuration, it MUST select
-the corresponding payload type and include the selected parameters in the answer.
+Whether a multistream Opus configuration is offered or selected may depend on
+application policy and endpoint capability information available to the
+application.
 
-If the offered configuration is not supported, the answerer MAY select a stereo
-Opus payload type or reject the media section according to {{?RFC3264}}.
+The SDP Offer/Answer procedures defined by this specification do not provide
+a mechanism for discovering the endpoint's physical audio output configuration
+or speaker layout.
 
-An answerer SHOULD NOT silently down-convert decoded output to stereo without
-providing an indication of that behavior to the application.
+Selection of an appropriate rendering configuration, including output-device
+selection and downmixing, is an application or implementation concern and
+is outside the scope of SDP negotiation.
+
+If the answerer accepts the offered multistream Opus configuration, it MUST
+select the corresponding payload type and include the selected multistream
+parameters in the answer.
+
+If the offered configuration is not accepted, the answerer MAY select a stereo
+Opus payload type or reject the media section according to {{!RFC3264}}.
 
 ## Examples
 
@@ -237,27 +265,44 @@ The following offer advertises a 5.1 multistream Opus configuration using
 payload type 111 and a stereo Opus fallback using payload type 112 for
 backward compatibility.
 
-```sdp
+~~~ sdp
+NOTE: '\' line wrapping per RFC 8792
+
 m=audio 9 UDP/TLS/RTP/SAVPF 111 112
 a=mid:audio
 a=rtpmap:111 opus/48000/6
-a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+a=fmtp:111 num_streams=4;coupled_streams=2;\
+  channel_mapping=0,4,1,2,3,5
 a=rtpmap:112 opus/48000/2
 a=sendrecv
-```
+~~~
 
 ### Answer: Accept 5.1 Audio
 
 The answer selects payload type 111 and echoes the negotiated multistream
 parameters, indicating support for the offered 5.1-channel layout.
 
-```sdp
+~~~ sdp
+NOTE: '\' line wrapping per RFC 8792
+
 m=audio 9 UDP/TLS/RTP/SAVPF 111
 a=mid:audio
 a=rtpmap:111 opus/48000/6
-a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+a=fmtp:111 num_streams=4;coupled_streams=2;\
+  channel_mapping=0,4,1,2,3,5
 a=sendrecv
-```
+~~~
+
+# Packet Size Considerations
+
+Multistream Opus configurations can produce RTP packets significantly larger
+than those typically produced by mono or stereo Opus configurations.
+
+Senders MUST take the applicable path MTU into consideration when selecting the bitrate,
+packetization duration, and number of encoded channels. Implementations SHOULD
+avoid configurations that result in RTP packets exceeding the applicable path MTU.
+
+This specification does not define an RTP-level fragmentation mechanism for Opus packets.
 
 # Security Considerations
 
@@ -267,6 +312,9 @@ beyond those already described in {{?RFC7587}}.
 Implementations SHOULD ensure that SDP parsing and RTP payload handling are robust against
 malformed or malicious input. Implementations SHOULD validate multistream configuration parameters,
 including channel mappings, stream counts, and coupled-stream counts, before use.
+
+Implementations MUST apply the constraints of the selected channel mapping family when
+validating offered multistream configurations.
 
 Applications using multichannel Opus streams should also consider the privacy implications of
 transmitting spatial audio information, which may reveal environmental or application context
@@ -285,6 +333,7 @@ Opus RTP payload format defined in {{?RFC7587}}.
 No IANA action is required by this document.
 
 # Acknowledgements
+{:unnumbered}
 
 The author would like to thank Philipp Hancke for his detailed review and constructive
 feedback during the AVTCORE adoption discussion. His comments helped shape the direction
@@ -292,8 +341,12 @@ of this document from standardizing a deployment-specific "multiopus" signaling 
 toward specifying interoperable SDP signaling for Opus multistream operation while
 continuing to use the Opus RTP payload format defined in {{?RFC7587}}.
 
+The author would also like to thank Timothy B. Terriberry for his detailed review of
+the multistream signaling constraints, channel mapping semantics,
+and RTP packet size considerations.
+
 The author would also like to thank Hyunsik Yang for his careful review of the document and
 for identifying editorial issues and textual improvements during the adoption process.
 
-The author further thanks Erik Språng, Timothy Terriberry, Mo Zanaty, the AVTCORE chairs,
-and other working group participants for their review, comments, and support.
+The author further thanks Erik Språng, Mo Zanaty, the AVTCORE chairs, and
+other working group participants for their review, comments, and support.
