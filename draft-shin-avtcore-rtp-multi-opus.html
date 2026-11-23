@@ -18,23 +18,23 @@ The signaling procedures specified in this document are intended to provide
 a standardized alternative to deployment-specific approaches that have historically
 been referred to as "multiopus". 
     ' name="description">
-<meta content="xml2rfc 3.34.1" name="generator">
+<meta content="xml2rfc 3.35.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-shin-avtcore-rtp-multi-opus-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.34.1
-    Python 3.14.8
-    ConfigArgParse 1.8.0
+  xml2rfc 3.35.0
+    Python 3.14.10
+    ConfigArgParse 1.10.1
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.12.2
+    platformdirs 4.14.7
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.9.1
+    wcwidth 0.9.4
 -->
 <link href="draft-shin-avtcore-rtp-multi-opus.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1035,7 +1035,7 @@ svg {
   & :is([stroke="white"], [stroke^="#fff"]) {
     stroke: var(--background-color);
   }
-  & :is([fill="black"], [fill^="#000"], :not([fill])) {
+  & :is([fill="black"], [fill^="#000"], :not([fill], [fill] *)) {
     fill: var(--text-color);
   }
   & :is([fill="white"], [fill^="#fff"]) {
@@ -1050,11 +1050,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">OPUS-MULTISTREAM</td>
-<td class="right">October 2026</td>
+<td class="right">November 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Shin</td>
-<td class="center">Expires 17 April 2027</td>
+<td class="center">Expires 27 May 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1067,12 +1067,12 @@ svg {
 <dd class="internet-draft">draft-shin-avtcore-rtp-multi-opus-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-10-14" class="published">14 October 2026</time>
+<time datetime="2026-11-23" class="published">23 November 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-04-17">17 April 2027</time></dd>
+<dd class="expires"><time datetime="2027-05-27">27 May 2027</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1126,7 +1126,7 @@ been referred to as "multiopus".<a href="#section-abstract-1" class="pilcrow">¶
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 27 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1159,57 +1159,65 @@ been referred to as "multiopus".<a href="#section-abstract-1" class="pilcrow">¶
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-relationship-to-existing-rf" class="internal xref">Relationship to Existing RFCs</a></p>
+            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-relationship-of-rfcs-and-th" class="internal xref">Relationship of RFCs and This Draft</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-relationship-to-existing-rf" class="internal xref">Relationship to Existing RFCs</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-relationship-of-rfcs-and-th" class="internal xref">Relationship of RFCs and This Draft</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-summary-of-rfcs-and-this-do" class="internal xref">Summary of RFCs and This Document</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-summary-of-rfcs-and-this-do" class="internal xref">Summary of RFCs and This Document</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-overview-and-rationale" class="internal xref">Overview and Rationale</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-overview-and-rationale" class="internal xref">Overview and Rationale</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-sdp-parameters-for-opus-mul" class="internal xref">SDP Parameters for Opus Multistream</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-field-descriptions" class="internal xref">Field Descriptions</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-mapping-families-and-extens" class="internal xref">Mapping Families and Extensibility</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-field-presence-and-constrai" class="internal xref">Field Presence and Constraints</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4">
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-sdp-examples" class="internal xref">SDP Examples</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.1">
+                    <p id="section-toc.1-1.5.2.4.2.1.1"><a href="#section-5.4.1" class="auto internal xref">5.4.1</a>.  <a href="#name-51-audio" class="internal xref">5.1 Audio</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.2">
+                    <p id="section-toc.1-1.5.2.4.2.2.1"><a href="#section-5.4.2" class="auto internal xref">5.4.2</a>.  <a href="#name-71-audio" class="internal xref">7.1 Audio</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-sdp-parameters-for-opus-mul" class="internal xref">SDP Parameters for Opus Multistream</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-offer-answer-procedures" class="internal xref">Offer/Answer Procedures</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-field-descriptions" class="internal xref">Field Descriptions</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
-                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-mapping-families-and-extens" class="internal xref">Mapping Families and Extensibility</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
-                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-field-presence-and-constrai" class="internal xref">Field Presence and Constraints</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
-                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-sdp-examples" class="internal xref">SDP Examples</a></p>
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4.2.1">
-                    <p id="section-toc.1-1.6.2.4.2.1.1"><a href="#section-6.4.1" class="auto internal xref">6.4.1</a>.  <a href="#name-51-audio" class="internal xref">5.1 Audio</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
+                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-offer-51-audio-6-channels" class="internal xref">Offer: 5.1 Audio (6 channels)</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4.2.2">
-                    <p id="section-toc.1-1.6.2.4.2.2.1"><a href="#section-6.4.2" class="auto internal xref">6.4.2</a>.  <a href="#name-71-audio" class="internal xref">7.1 Audio</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.2">
+                    <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="auto internal xref">6.1.2</a>.  <a href="#name-answer-accept-51-audio" class="internal xref">Answer: Accept 5.1 Audio</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-offer-answer-procedures" class="internal xref">Offer/Answer Procedures</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.1">
-                    <p id="section-toc.1-1.7.2.1.2.1.1"><a href="#section-7.1.1" class="auto internal xref">7.1.1</a>.  <a href="#name-offer-51-audio-6-channels" class="internal xref">Offer: 5.1 Audio (6 channels)</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.2">
-                    <p id="section-toc.1-1.7.2.1.2.2.1"><a href="#section-7.1.2" class="auto internal xref">7.1.2</a>.  <a href="#name-answer-accept-51-audio" class="internal xref">Answer: Accept 5.1 Audio</a></p>
-</li>
-                </ul>
-</li>
-            </ul>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-packet-size-considerations" class="internal xref">Packet Size Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
@@ -1218,10 +1226,18 @@ been referred to as "multiopus".<a href="#section-abstract-1" class="pilcrow">¶
             <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref"></a><a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
+                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref"></a><a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref"></a><a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
             <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
@@ -1260,130 +1276,170 @@ Future Opus extensions may reuse the SDP signaling framework defined here, subje
 the requirements and constraints of their respective specifications.<a href="#section-1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="relationship-to-existing-rfcs">
+<div id="conventions-and-definitions">
 <section id="section-2">
-      <h2 id="name-relationship-to-existing-rf">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-relationship-to-existing-rf" class="section-name selfRef">Relationship to Existing RFCs</a>
+      <h2 id="name-conventions-and-definitions">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
       </h2>
-<p id="section-2-1">This section summarizes the scope and relationship between <span>[<a href="#RFC6716" class="cite xref">RFC6716</a>]</span> (Opus codec),
-<span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> (Opus over RTP), <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span> (Ogg encapsulation of Opus), and this document.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2"><span>[<a href="#RFC6716" class="cite xref">RFC6716</a>]</span> defines the Opus codec, including support for multistream encoding and
-channel mapping.<a href="#section-2-2" class="pilcrow">¶</a></p>
-<p id="section-2-3"><span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> defines RTP transport and SDP signaling for Opus in RTP sessions but
-primarily addresses mono and stereo operation.<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4"><span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span> defines channel mapping families for Opus carried in the Ogg container format.
-These mappings provide semantic interpretation of decoded output channels but do not
-define RTP usage or SDP signaling procedures.<a href="#section-2-4" class="pilcrow">¶</a></p>
-<p id="section-2-5">This document specifies SDP signaling and Offer/Answer procedures for Opus multistream operation
-in RTP sessions while continuing to use the RTP payload format defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> and
-the channel mapping semantics defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+"MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">The SDP examples are media-level fragments. Long lines use the folding
+convention in <span>[<a href="#RFC8792" class="cite xref">RFC8792</a>]</span>. Remove the folding header, trailing backslash,
+line break, and leading whitespace on the continuation line before using
+the SDP.<a href="#section-2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="relationship-of-rfcs-and-this-draft">
+<div id="relationship-to-existing-rfcs">
 <section id="section-3">
-      <h2 id="name-relationship-of-rfcs-and-th">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-relationship-of-rfcs-and-th" class="section-name selfRef">Relationship of RFCs and This Draft</a>
+      <h2 id="name-relationship-to-existing-rf">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-relationship-to-existing-rf" class="section-name selfRef">Relationship to Existing RFCs</a>
       </h2>
-<div class="alignLeft art-text artwork" id="section-3-1">
+<p id="section-3-1">This section summarizes the scope and relationship between <span>[<a href="#RFC6716" class="cite xref">RFC6716</a>]</span> (Opus codec),
+<span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> (Opus over RTP), <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span> (Ogg encapsulation of Opus), and this document.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2"><span>[<a href="#RFC6716" class="cite xref">RFC6716</a>]</span> defines the Opus codec, including support for multistream encoding and
+channel mapping.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3"><span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> defines RTP transport and SDP signaling for Opus in RTP sessions but
+primarily addresses mono and stereo operation.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-4"><span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span> defines channel mapping families for Opus carried in the Ogg container format.
+These mappings provide semantic interpretation of decoded output channels but do not
+define RTP usage or SDP signaling procedures.<a href="#section-3-4" class="pilcrow">¶</a></p>
+<p id="section-3-5">This document specifies SDP signaling and Offer/Answer procedures for Opus multistream operation
+in RTP sessions while continuing to use the RTP payload format defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span> and
+the channel mapping semantics defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<div id="relationship-of-rfcs-and-this-draft">
+<section id="section-3.1">
+        <h3 id="name-relationship-of-rfcs-and-th">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-relationship-of-rfcs-and-th" class="section-name selfRef">Relationship of RFCs and This Draft</a>
+        </h3>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-3.1-1">
 <pre>
-  +----------------+     +-------------------+     +----------------+
-  |   RFC 6716     |     |     RFC 7845      |     |   RFC 7587     |
-  |  Opus Codec    |     | Ogg Encapsulation |     | Opus over RTP  |
-  +----------------+     +-------------------+     +----------------+
-           |                       |                        |
-           |                       |                        |
-           +-----------------------+------------------------+
-                                   |
-                                   v
-                   +------------------------------+
-                   |         This Document        |
-                   |      Opus Multistream SDP    |
-                   |      Signaling Framework     |
-                   +------------------------------+
-</pre><a href="#section-3-1" class="pilcrow">¶</a>
++----------------+   +-------------------+   +----------------+
+|   RFC 6716     |   |     RFC 7845      |   |   RFC 7587     |
+|  Opus Codec    |   | Ogg Encapsulation |   | Opus over RTP  |
++----------------+   +-------------------+   +----------------+
+         |                     |                     |
+         +---------------------+---------------------+
+                               |
+                               v
+                +------------------------------+
+                |         This Document        |
+                |      Opus Multistream SDP    |
+                |      Signaling Framework     |
+                +------------------------------+
+</pre><a href="#section-3.1-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="summary-of-rfcs-and-this-document">
-<section id="section-4">
-      <h2 id="name-summary-of-rfcs-and-this-do">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-summary-of-rfcs-and-this-do" class="section-name selfRef">Summary of RFCs and This Document</a>
-      </h2>
-<div class="alignLeft art-text artwork" id="section-4-1">
-<pre>
- +------------+------------------------+-----------------------+-----------------------+
- | RFC/Doc    | Primary Scope          | Channel Mapping       | SDP Signaling         |
- +------------+------------------------+-----------------------+-----------------------+
- | RFC 6716   | Opus codec             | Yes                   | No                    |
- | RFC 7845   | Ogg encapsulation      | Yes (families)        | No                    |
- | RFC 7587   | Opus RTP payload       | Mono/Stereo only      | Yes (mono/stereo)     |
- | This Doc   | Multistream SDP rules  | Reuses RFC 7845       | Yes (multichannel)    |
- +------------+------------------------+-----------------------+-----------------------+
-</pre><a href="#section-4-1" class="pilcrow">¶</a>
+<section id="section-3.2">
+        <h3 id="name-summary-of-rfcs-and-this-do">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-summary-of-rfcs-and-this-do" class="section-name selfRef">Summary of RFCs and This Document</a>
+        </h3>
+<table class="center" id="table-1">
+          <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">RFC/Doc</th>
+              <th class="text-left" rowspan="1" colspan="1">Primary Scope</th>
+              <th class="text-left" rowspan="1" colspan="1">Channel Mapping</th>
+              <th class="text-left" rowspan="1" colspan="1">SDP Signaling</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">RFC 6716</td>
+              <td class="text-left" rowspan="1" colspan="1">Opus codec</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">RFC 7845</td>
+              <td class="text-left" rowspan="1" colspan="1">Ogg encapsulation</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes (families)</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">RFC 7587</td>
+              <td class="text-left" rowspan="1" colspan="1">Opus RTP payload</td>
+              <td class="text-left" rowspan="1" colspan="1">Mono/stereo only</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes (mono/stereo)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">This Doc</td>
+              <td class="text-left" rowspan="1" colspan="1">Multistream SDP rules</td>
+              <td class="text-left" rowspan="1" colspan="1">Reuses RFC 7845</td>
+              <td class="text-left" rowspan="1" colspan="1">Yes (multichannel)</td>
+            </tr>
+          </tbody>
+        </table>
+</section>
 </div>
 </section>
 </div>
 <div id="overview-and-rationale">
-<section id="section-5">
+<section id="section-4">
       <h2 id="name-overview-and-rationale">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-overview-and-rationale" class="section-name selfRef">Overview and Rationale</a>
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-overview-and-rationale" class="section-name selfRef">Overview and Rationale</a>
       </h2>
-<p id="section-5-1">Opus supports multistream operation and channel mappings that enable multichannel audio
+<p id="section-4-1">Opus supports multistream operation and channel mappings that enable multichannel audio
 configurations such as 5.1 and 7.1. While such configurations have been deployed in practice,
-interoperable SDP signaling for these configurations has not been standardized for RTP sessions.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">Several deployed implementations (e.g., <span>[<a href="#libwebrtc" class="cite xref">libwebrtc</a>]</span> based) have historically used
+interoperable SDP signaling for these configurations has not been standardized for RTP sessions.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">Several deployed implementations (e.g., <span>[<a href="#libwebrtc" class="cite xref">libwebrtc</a>]</span> based) have historically used
 implementation-specific SDP signaling approaches, commonly referred to as "multiopus",
-together with parameters such as num_streams, coupled_streams, and channel_mapping.
+together with parameters such as <code>num_streams</code>, <code>coupled_streams</code>, and <code>channel_mapping</code>.
 Although these approaches have enabled deployment of multichannel Opus,
-they are not standardized and may lead to interoperability challenges.<a href="#section-5-2" class="pilcrow">¶</a></p>
-<p id="section-5-3">This document standardizes SDP signaling semantics for Opus multistream operation while
+they are not standardized and may lead to interoperability challenges.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">This document standardizes SDP signaling semantics for Opus multistream operation while
 continuing to use the Opus RTP payload format defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>. Standardizing these semantics
-improves interoperability and removes the need for application-specific SDP modifications.<a href="#section-5-3" class="pilcrow">¶</a></p>
+improves interoperability and removes the need for application-specific SDP modifications.<a href="#section-4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sdp-parameters-for-opus-multistream">
-<section id="section-6">
+<section id="section-5">
       <h2 id="name-sdp-parameters-for-opus-mul">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-sdp-parameters-for-opus-mul" class="section-name selfRef">SDP Parameters for Opus Multistream</a>
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-sdp-parameters-for-opus-mul" class="section-name selfRef">SDP Parameters for Opus Multistream</a>
       </h2>
 <div id="field-descriptions">
-<section id="section-6.1">
+<section id="section-5.1">
         <h3 id="name-field-descriptions">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-field-descriptions" class="section-name selfRef">Field Descriptions</a>
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-field-descriptions" class="section-name selfRef">Field Descriptions</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="section-6.1-1.1">
-            <p id="section-6.1-1.1.1"><code>a=rtpmap:&lt;pt&gt; opus/&lt;clock-rate&gt;/&lt;channel-count&gt;</code><a href="#section-6.1-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.1-1.1">
+            <p id="section-5.1-1.1.1"><code>a=rtpmap:&lt;pt&gt; opus/&lt;clock-rate&gt;/&lt;channel-count&gt;</code><a href="#section-5.1-1.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.1-1.1.2.1">
-                <p id="section-6.1-1.1.2.1.1"><code>&lt;pt&gt;</code>: Dynamic payload type (e.g., 96).<a href="#section-6.1-1.1.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.1-1.1.2.1">
+                <p id="section-5.1-1.1.2.1.1"><code>&lt;pt&gt;</code>: Dynamic payload type (e.g., 96).<a href="#section-5.1-1.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-6.1-1.1.2.2">
-                <p id="section-6.1-1.1.2.2.1"><code>&lt;clock-rate&gt;</code>: Fixed Opus RTP clock rate of 48000 Hz, as defined in
+              <li class="normal" id="section-5.1-1.1.2.2">
+                <p id="section-5.1-1.1.2.2.1"><code>&lt;clock-rate&gt;</code>: Fixed Opus RTP clock rate of 48000 Hz, as defined in
 <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>. This placeholder represents the literal value <code>48000</code>
-in actual SDP.<a href="#section-6.1-1.1.2.2.1" class="pilcrow">¶</a></p>
+in actual SDP.<a href="#section-5.1-1.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-6.1-1.1.2.3">
-                <p id="section-6.1-1.1.2.3.1"><code>&lt;channel-count&gt;</code>: Total number of output channels resulting from decoding.<a href="#section-6.1-1.1.2.3.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-5.1-1.1.2.3">
+                <p id="section-5.1-1.1.2.3.1"><code>&lt;channel-count&gt;</code>: Total number of output channels resulting from decoding.<a href="#section-5.1-1.1.2.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
-          <li class="normal" id="section-6.1-1.2">
-            <p id="section-6.1-1.2.1"><code>a=fmtp:&lt;pt&gt; num_streams=&lt;N&gt;;coupled_streams=&lt;M&gt;;channel_mapping=&lt;C&gt;</code><a href="#section-6.1-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-5.1-1.2">
+            <p id="section-5.1-1.2.1"><code>a=fmtp:&lt;pt&gt; num_streams=&lt;N&gt;;coupled_streams=&lt;M&gt;;channel_mapping=&lt;C&gt;</code><a href="#section-5.1-1.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.1-1.2.2.1">
-                <p id="section-6.1-1.2.2.1.1"><code>&lt;pt&gt;</code>: Same payload type as in the corresponding <code>a=rtpmap</code> attribute.<a href="#section-6.1-1.2.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.1-1.2.2.1">
+                <p id="section-5.1-1.2.2.1.1"><code>&lt;pt&gt;</code>: Same payload type as in the corresponding <code>a=rtpmap</code> attribute.<a href="#section-5.1-1.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-6.1-1.2.2.2">
-                <p id="section-6.1-1.2.2.2.1"><code>num_streams</code>: Total number of Opus streams.<a href="#section-6.1-1.2.2.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-5.1-1.2.2.2">
+                <p id="section-5.1-1.2.2.2.1"><code>num_streams</code>: Total number of Opus streams.<a href="#section-5.1-1.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-6.1-1.2.2.3">
-                <p id="section-6.1-1.2.2.3.1"><code>coupled_streams</code>: Number of stereo (coupled) streams.<a href="#section-6.1-1.2.2.3.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-5.1-1.2.2.3">
+                <p id="section-5.1-1.2.2.3.1"><code>coupled_streams</code>: Number of stereo (coupled) streams.<a href="#section-5.1-1.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-6.1-1.2.2.4">
-                <p id="section-6.1-1.2.2.4.1"><code>channel_mapping</code>: Comma-separated list defining the mapping from decoded
-channels to semantic output positions according to the channel mapping semantics
-defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.1-1.2.2.4.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-5.1-1.2.2.4">
+                <p id="section-5.1-1.2.2.4.1"><code>channel_mapping</code>: Comma-separated list defining the mapping from decoded
+channels to semantic output positions according to the channel mapping
+semantics defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-5.1-1.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
@@ -1391,65 +1447,77 @@ defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a hr
 </section>
 </div>
 <div id="mapping-families-and-extensibility">
-<section id="section-6.2">
+<section id="section-5.2">
         <h3 id="name-mapping-families-and-extens">
-<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-mapping-families-and-extens" class="section-name selfRef">Mapping Families and Extensibility</a>
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-mapping-families-and-extens" class="section-name selfRef">Mapping Families and Extensibility</a>
         </h3>
-<p id="section-6.2-1">Channel mapping families define the semantic interpretation of decoded output channels
-and do not alter the Opus bitstream or RTP payload format.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.2-2">This document normatively specifies SDP signaling for Mapping Family 1
-(channel-based speaker layouts) as defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.2-3">The signaling framework is designed to be extensible to additional mapping families,
+<p id="section-5.2-1">Channel mapping families define the semantic interpretation of decoded output channels
+and do not alter the Opus bitstream or RTP payload format.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">This document normatively specifies SDP signaling for Mapping Family 1
+(channel-based speaker layouts) as defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-3">The signaling framework is designed to be extensible to additional mapping families,
 including Ambisonics or externally defined mappings, without requiring changes to
-the underlying Opus RTP payload format.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
-<p id="section-6.2-4">An endpoint that receives an offer specifying a mapping family it does not support
-MUST reject the corresponding payload type during Offer/Answer negotiation.<a href="#section-6.2-4" class="pilcrow">¶</a></p>
+the underlying Opus RTP payload format.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-4">An endpoint that receives an offer specifying a mapping family it does not support
+MUST reject the corresponding payload type during Offer/Answer negotiation.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="field-presence-and-constraints">
-<section id="section-6.3">
+<section id="section-5.3">
         <h3 id="name-field-presence-and-constrai">
-<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-field-presence-and-constrai" class="section-name selfRef">Field Presence and Constraints</a>
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-field-presence-and-constrai" class="section-name selfRef">Field Presence and Constraints</a>
         </h3>
-<p id="section-6.3-1">The "channel_mapping" parameter MUST be present when the number of
-output channels exceeds two.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
-<p id="section-6.3-2">For configurations with one or two output channels, the channel_mapping parameter
+<p id="section-5.3-1">The <code>channel_mapping</code> parameter MUST be present when the number of
+output channels exceeds two.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.3-2">For configurations with one or two output channels, the <code>channel_mapping</code> parameter
 MAY be omitted. If omitted, the receiver MUST interpret the configuration according
-to Mapping Family 0 semantics defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
-<p id="section-6.3-3">The values of "num_streams", "coupled_streams", and each entry in "channel_mapping"
-MUST be integers in the range 0 to 255.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
-<p id="section-6.3-4">For Mapping Family 1, the number of output channels MUST NOT exceed eight.<a href="#section-6.3-4" class="pilcrow">¶</a></p>
+to Mapping Family 0 semantics defined in <span>[<a href="#RFC7845" class="cite xref">RFC7845</a>]</span>.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
+<p id="section-5.3-3">The values of <code>num_streams</code>, <code>coupled_streams</code>, and each entry in <code>channel_mapping</code>
+MUST be integers in the range 0 to 255.<a href="#section-5.3-3" class="pilcrow">¶</a></p>
+<p id="section-5.3-4">These ranges describe the representation limits of the parameters and do not override
+constraints imposed by the selected channel mapping family.<a href="#section-5.3-4" class="pilcrow">¶</a></p>
+<p id="section-5.3-5">For Mapping Family 1, the number of output channels MUST NOT exceed eight.<a href="#section-5.3-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sdp-examples">
-<section id="section-6.4">
+<section id="section-5.4">
         <h3 id="name-sdp-examples">
-<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-sdp-examples" class="section-name selfRef">SDP Examples</a>
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-sdp-examples" class="section-name selfRef">SDP Examples</a>
         </h3>
 <div id="audio">
-<section id="section-6.4.1">
+<section id="section-5.4.1">
           <h4 id="name-51-audio">
-<a href="#section-6.4.1" class="section-number selfRef">6.4.1. </a><a href="#name-51-audio" class="section-name selfRef">5.1 Audio</a>
+<a href="#section-5.4.1" class="section-number selfRef">5.4.1. </a><a href="#name-51-audio" class="section-name selfRef">5.1 Audio</a>
           </h4>
-<p id="section-6.4.1-1">The following example signals six output channels using four Opus streams,
-two of which are coupled streams.<a href="#section-6.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.4.1-2"><code>sdp
+<p id="section-5.4.1-1">The following example signals six output channels using four Opus streams,
+two of which are coupled streams.<a href="#section-5.4.1-1" class="pilcrow">¶</a></p>
+<div class="lang-sdp sourcecode" id="section-5.4.1-2">
+<pre>
+NOTE: '\' line wrapping per RFC 8792
+
 a=rtpmap:111 opus/48000/6
-a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
-</code><a href="#section-6.4.1-2" class="pilcrow">¶</a></p>
+a=fmtp:111 num_streams=4;coupled_streams=2;\
+  channel_mapping=0,4,1,2,3,5
+</pre><a href="#section-5.4.1-2" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="audio-1">
-<section id="section-6.4.2">
+<section id="section-5.4.2">
           <h4 id="name-71-audio">
-<a href="#section-6.4.2" class="section-number selfRef">6.4.2. </a><a href="#name-71-audio" class="section-name selfRef">7.1 Audio</a>
+<a href="#section-5.4.2" class="section-number selfRef">5.4.2. </a><a href="#name-71-audio" class="section-name selfRef">7.1 Audio</a>
           </h4>
-<p id="section-6.4.2-1">The following example signals eight output channels using five Opus streams,
-three of which are coupled streams.<a href="#section-6.4.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.4.2-2"><code>sdp
+<p id="section-5.4.2-1">The following example signals eight output channels using five Opus streams,
+three of which are coupled streams.<a href="#section-5.4.2-1" class="pilcrow">¶</a></p>
+<div class="lang-sdp sourcecode" id="section-5.4.2-2">
+<pre>
+NOTE: '\' line wrapping per RFC 8792
+
 a=rtpmap:111 opus/48000/8
-a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
-</code><a href="#section-6.4.2-2" class="pilcrow">¶</a></p>
+a=fmtp:111 num_streams=5;coupled_streams=3;\
+  channel_mapping=0,6,1,2,3,4,5,7
+</pre><a href="#section-5.4.2-2" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 </section>
@@ -1457,64 +1525,95 @@ a=fmtp:111 num_streams=5;coupled_streams=3;channel_mapping=0,6,1,2,3,4,5,7
 </section>
 </div>
 <div id="offeranswer-procedures">
-<section id="section-7">
+<section id="section-6">
       <h2 id="name-offer-answer-procedures">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-offer-answer-procedures" class="section-name selfRef">Offer/Answer Procedures</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-offer-answer-procedures" class="section-name selfRef">Offer/Answer Procedures</a>
       </h2>
-<p id="section-7-1">An offerer willing to negotiate multichannel Opus MAY include one or more
+<p id="section-6-1">An offerer willing to negotiate multichannel Opus MAY include one or more
 Opus multistream payload configurations with the appropriate format parameters.
 For backward compatibility, an offerer SHOULD also include a stereo alternative
-using <code>opus/&lt;clock-rate&gt;/2</code> as defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>.<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">An answerer MAY accept an offered multistream configuration if it can parse
-the offered parameters and decode the resulting multichannel audio without loss
-of the negotiated channel semantics.<a href="#section-7-2" class="pilcrow">¶</a></p>
-<p id="section-7-3">If the answerer supports the offered multistream Opus configuration, it MUST select
-the corresponding payload type and include the selected parameters in the answer.<a href="#section-7-3" class="pilcrow">¶</a></p>
-<p id="section-7-4">If the offered configuration is not supported, the answerer MAY select a stereo
-Opus payload type or reject the media section according to <span>[<a href="#RFC3264" class="cite xref">RFC3264</a>]</span>.<a href="#section-7-4" class="pilcrow">¶</a></p>
-<p id="section-7-5">An answerer SHOULD NOT silently down-convert decoded output to stereo without
-providing an indication of that behavior to the application.<a href="#section-7-5" class="pilcrow">¶</a></p>
+using <code>opus/&lt;clock-rate&gt;/2</code> as defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">An answerer MAY accept an offered multistream Opus configuration if it supports
+the signaled multistream parameters and can decode the resulting audio
+configuration.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">Whether a multistream Opus configuration is offered or selected may depend on
+application policy and endpoint capability information available to the
+application.<a href="#section-6-3" class="pilcrow">¶</a></p>
+<p id="section-6-4">The SDP Offer/Answer procedures defined by this specification do not provide
+a mechanism for discovering the endpoint's physical audio output configuration
+or speaker layout.<a href="#section-6-4" class="pilcrow">¶</a></p>
+<p id="section-6-5">Selection of an appropriate rendering configuration, including output-device
+selection and downmixing, is an application or implementation concern and
+is outside the scope of SDP negotiation.<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-6">If the answerer accepts the offered multistream Opus configuration, it MUST
+select the corresponding payload type and include the selected multistream
+parameters in the answer.<a href="#section-6-6" class="pilcrow">¶</a></p>
+<p id="section-6-7">If the offered configuration is not accepted, the answerer MAY select a stereo
+Opus payload type or reject the media section according to <span>[<a href="#RFC3264" class="cite xref">RFC3264</a>]</span>.<a href="#section-6-7" class="pilcrow">¶</a></p>
 <div id="examples">
-<section id="section-7.1">
+<section id="section-6.1">
         <h3 id="name-examples">
-<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
         </h3>
 <div id="offer-51-audio-6-channels">
-<section id="section-7.1.1">
+<section id="section-6.1.1">
           <h4 id="name-offer-51-audio-6-channels">
-<a href="#section-7.1.1" class="section-number selfRef">7.1.1. </a><a href="#name-offer-51-audio-6-channels" class="section-name selfRef">Offer: 5.1 Audio (6 channels)</a>
+<a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-offer-51-audio-6-channels" class="section-name selfRef">Offer: 5.1 Audio (6 channels)</a>
           </h4>
-<p id="section-7.1.1-1">The following offer advertises a 5.1 multistream Opus configuration using
+<p id="section-6.1.1-1">The following offer advertises a 5.1 multistream Opus configuration using
 payload type 111 and a stereo Opus fallback using payload type 112 for
-backward compatibility.<a href="#section-7.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-7.1.1-2"><code>sdp
+backward compatibility.<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
+<div class="lang-sdp sourcecode" id="section-6.1.1-2">
+<pre>
+NOTE: '\' line wrapping per RFC 8792
+
 m=audio 9 UDP/TLS/RTP/SAVPF 111 112
 a=mid:audio
 a=rtpmap:111 opus/48000/6
-a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+a=fmtp:111 num_streams=4;coupled_streams=2;\
+  channel_mapping=0,4,1,2,3,5
 a=rtpmap:112 opus/48000/2
 a=sendrecv
-</code><a href="#section-7.1.1-2" class="pilcrow">¶</a></p>
+</pre><a href="#section-6.1.1-2" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="answer-accept-51-audio">
-<section id="section-7.1.2">
+<section id="section-6.1.2">
           <h4 id="name-answer-accept-51-audio">
-<a href="#section-7.1.2" class="section-number selfRef">7.1.2. </a><a href="#name-answer-accept-51-audio" class="section-name selfRef">Answer: Accept 5.1 Audio</a>
+<a href="#section-6.1.2" class="section-number selfRef">6.1.2. </a><a href="#name-answer-accept-51-audio" class="section-name selfRef">Answer: Accept 5.1 Audio</a>
           </h4>
-<p id="section-7.1.2-1">The answer selects payload type 111 and echoes the negotiated multistream
-parameters, indicating support for the offered 5.1-channel layout.<a href="#section-7.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-7.1.2-2"><code>sdp
+<p id="section-6.1.2-1">The answer selects payload type 111 and echoes the negotiated multistream
+parameters, indicating support for the offered 5.1-channel layout.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
+<div class="lang-sdp sourcecode" id="section-6.1.2-2">
+<pre>
+NOTE: '\' line wrapping per RFC 8792
+
 m=audio 9 UDP/TLS/RTP/SAVPF 111
 a=mid:audio
 a=rtpmap:111 opus/48000/6
-a=fmtp:111 num_streams=4;coupled_streams=2;channel_mapping=0,4,1,2,3,5
+a=fmtp:111 num_streams=4;coupled_streams=2;\
+  channel_mapping=0,4,1,2,3,5
 a=sendrecv
-</code><a href="#section-7.1.2-2" class="pilcrow">¶</a></p>
+</pre><a href="#section-6.1.2-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
 </section>
 </div>
 </section>
 </div>
+<div id="packet-size-considerations">
+<section id="section-7">
+      <h2 id="name-packet-size-considerations">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-packet-size-considerations" class="section-name selfRef">Packet Size Considerations</a>
+      </h2>
+<p id="section-7-1">Multistream Opus configurations can produce RTP packets significantly larger
+than those typically produced by mono or stereo Opus configurations.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">Senders MUST take the applicable path MTU into consideration when selecting the bitrate,
+packetization duration, and number of encoded channels. Implementations SHOULD
+avoid configurations that result in RTP packets exceeding the applicable path MTU.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-3">This specification does not define an RTP-level fragmentation mechanism for Opus packets.<a href="#section-7-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
@@ -1527,11 +1626,13 @@ beyond those already described in <span>[<a href="#RFC7587" class="cite xref">RF
 <p id="section-8-2">Implementations SHOULD ensure that SDP parsing and RTP payload handling are robust against
 malformed or malicious input. Implementations SHOULD validate multistream configuration parameters,
 including channel mappings, stream counts, and coupled-stream counts, before use.<a href="#section-8-2" class="pilcrow">¶</a></p>
-<p id="section-8-3">Applications using multichannel Opus streams should also consider the privacy implications of
+<p id="section-8-3">Implementations MUST apply the constraints of the selected channel mapping family when
+validating offered multistream configurations.<a href="#section-8-3" class="pilcrow">¶</a></p>
+<p id="section-8-4">Applications using multichannel Opus streams should also consider the privacy implications of
 transmitting spatial audio information, which may reveal environmental or application context
-beyond that conveyed by mono or stereo audio.<a href="#section-8-3" class="pilcrow">¶</a></p>
-<p id="section-8-4">Transport-level security mechanisms such as DTLS-SRTP are RECOMMENDED to protect RTP streams
-from unauthorized access or modification.<a href="#section-8-4" class="pilcrow">¶</a></p>
+beyond that conveyed by mono or stereo audio.<a href="#section-8-4" class="pilcrow">¶</a></p>
+<p id="section-8-5">Transport-level security mechanisms such as DTLS-SRTP are RECOMMENDED to protect RTP streams
+from unauthorized access or modification.<a href="#section-8-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -1548,46 +1649,77 @@ Opus RTP payload format defined in <span>[<a href="#RFC7587" class="cite xref">R
 <div id="acknowledgements">
 <section id="section-10">
       <h2 id="name-acknowledgements">
-<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+<a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
       </h2>
 <p id="section-10-1">The author would like to thank Philipp Hancke for his detailed review and constructive
 feedback during the AVTCORE adoption discussion. His comments helped shape the direction
 of this document from standardizing a deployment-specific "multiopus" signaling approach
 toward specifying interoperable SDP signaling for Opus multistream operation while
 continuing to use the Opus RTP payload format defined in <span>[<a href="#RFC7587" class="cite xref">RFC7587</a>]</span>.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<p id="section-10-2">The author would also like to thank Hyunsik Yang for his careful review of the document and
-for identifying editorial issues and textual improvements during the adoption process.<a href="#section-10-2" class="pilcrow">¶</a></p>
-<p id="section-10-3">The author further thanks Erik Språng, Timothy Terriberry, Mo Zanaty, the AVTCORE chairs,
-and other working group participants for their review, comments, and support.<a href="#section-10-3" class="pilcrow">¶</a></p>
+<p id="section-10-2">The author would also like to thank Timothy B. Terriberry for his detailed review of
+the multistream signaling constraints, channel mapping semantics,
+and RTP packet size considerations.<a href="#section-10-2" class="pilcrow">¶</a></p>
+<p id="section-10-3">The author would also like to thank Hyunsik Yang for his careful review of the document and
+for identifying editorial issues and textual improvements during the adoption process.<a href="#section-10-3" class="pilcrow">¶</a></p>
+<p id="section-10-4">The author further thanks Erik Språng, Mo Zanaty, the AVTCORE chairs, and
+other working group participants for their review, comments, and support.<a href="#section-10-4" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="sec-informative-references">
+<div id="sec-combined-references">
 <section id="section-11">
-      <h2 id="name-informative-references">
-<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+      <h2 id="name-references">
+<a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-11.1">
+        <h3 id="name-normative-references">
+<a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
-<dt id="libwebrtc">[libwebrtc]</dt>
-      <dd>
-<span class="refAuthor">WebRTC</span>, <span class="refTitle">"Opus multistream mapping"</span>, <span>n.d.</span>, <span>&lt;<a href="https://webrtc-review.googlesource.com/c/src/+/129768">https://webrtc-review.googlesource.com/c/src/+/129768</a>&gt;</span>. </dd>
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC3264">[RFC3264]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Rosenberg, J.</span> and <span class="refAuthor">H. Schulzrinne</span>, <span class="refTitle">"An Offer/Answer Model with Session Description Protocol (SDP)"</span>, <span class="seriesInfo">RFC 3264</span>, <span class="seriesInfo">DOI 10.17487/RFC3264</span>, <time datetime="2002-07" class="refDate">July 2002</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3264">https://www.rfc-editor.org/rfc/rfc3264</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6716">[RFC6716]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Valin, JM.</span>, <span class="refAuthor">Vos, K.</span>, and <span class="refAuthor">T. Terriberry</span>, <span class="refTitle">"Definition of the Opus Audio Codec"</span>, <span class="seriesInfo">RFC 6716</span>, <span class="seriesInfo">DOI 10.17487/RFC6716</span>, <time datetime="2012-09" class="refDate">September 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6716">https://www.rfc-editor.org/rfc/rfc6716</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7587">[RFC7587]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Spittka, J.</span>, <span class="refAuthor">Vos, K.</span>, and <span class="refAuthor">JM. Valin</span>, <span class="refTitle">"RTP Payload Format for the Opus Speech and Audio Codec"</span>, <span class="seriesInfo">RFC 7587</span>, <span class="seriesInfo">DOI 10.17487/RFC7587</span>, <time datetime="2015-06" class="refDate">June 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7587">https://www.rfc-editor.org/rfc/rfc7587</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7845">[RFC7845]</dt>
-    <dd>
+        <dd>
 <span class="refAuthor">Terriberry, T.</span>, <span class="refAuthor">Lee, R.</span>, and <span class="refAuthor">R. Giles</span>, <span class="refTitle">"Ogg Encapsulation for the Opus Audio Codec"</span>, <span class="seriesInfo">RFC 7845</span>, <span class="seriesInfo">DOI 10.17487/RFC7845</span>, <time datetime="2016-04" class="refDate">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7845">https://www.rfc-editor.org/rfc/rfc7845</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+      <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 </dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-11.2">
+        <h3 id="name-informative-references">
+<a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="libwebrtc">[libwebrtc]</dt>
+        <dd>
+<span class="refAuthor">WebRTC</span>, <span class="refTitle">"Opus multistream mapping"</span>, <span>n.d.</span>, <span>&lt;<a href="https://webrtc-review.googlesource.com/c/src/+/129768">https://webrtc-review.googlesource.com/c/src/+/129768</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8792">[RFC8792]</dt>
+      <dd>
+<span class="refAuthor">Watsen, K.</span>, <span class="refAuthor">Auerswald, E.</span>, <span class="refAuthor">Farrel, A.</span>, and <span class="refAuthor">Q. Wu</span>, <span class="refTitle">"Handling Long Lines in Content of Internet-Drafts and RFCs"</span>, <span class="seriesInfo">RFC 8792</span>, <span class="seriesInfo">DOI 10.17487/RFC8792</span>, <time datetime="2020-06" class="refDate">June 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8792">https://www.rfc-editor.org/rfc/rfc8792</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
 </section>
 </div>
 <div id="authors-addresses">
